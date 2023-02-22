@@ -24,11 +24,12 @@
     margin: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .filter-form select{
     box-shadow: 0 0 2px 1px #a19e9e;
     padding: 9px 20px;
+    margin-right: 10px;
 
 }

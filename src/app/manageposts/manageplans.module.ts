@@ -35,8 +35,10 @@ export class managepostsservice {
   create_post_teaser(date: any, id: any) {
     return this.http.post(this.baseurl + "/v1/ecomplan/create/post/teaser?id=" + id, date, { headers: { auth: this.token }, });
   }
-  get_all_post(page: any) {
-    return this.http.get(this.baseurl + "/v1/ecomplan/get/all/post/pagenation?page=" + page, { headers: { auth: this.token }, });
+  get_all_post(params: any) {
+    const queryString = new URLSearchParams(params).toString();
+
+    return this.http.get(this.baseurl + "/v1/ecomplan/get/all/post/pagenation?" + queryString, { headers: { auth: this.token }, });
   }
   get_one_post(id: any) {
     return this.http.get(this.baseurl + "/v1/ecomplan/get/one/post?id=" + id, { headers: { auth: this.token }, });

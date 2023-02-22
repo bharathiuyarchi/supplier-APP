@@ -7,19 +7,24 @@
             <h5 class="title-menu mt-3" style="text-align: center;">My Posts</h5>
             <div class="row">
                 <div class="col-6">
-                    <div class="filter-form">
-                        <select name="" id="" class="btn" style="    text-align: left;">
-                            <option value="active">Active</option>
-                            <option value="assigned">Assigned</option>
-                            <option value="live">Live</option>
-                            <option value="completed">Completed</option>
-                            <option value="exhausted">Exhausted</option>
-                            <option value="removed">Removed</option>
-                        </select>
-                        <!-- <input type="text" ngxDaterangepickerMd [locale]="{applyLabel: 'o', format: 'DD-MM-YYYY'}"
-                            startKey="start" endKey="end" placeholder="Select Date Range" style="height: 35px;border-radius: 5px;border: none;box-shadow: 0 0 4px 0px #B6B2B2;padding:
-                            4px 7px;"> -->
-                    </div>
+                    <form [formGroup]="filterForm">
+                        <div class="filter-form">
+                            <select name="" id="" class="btn" style="    text-align: left;" (change)="apply_filter()"
+                                formControlName="status">
+                                <option value="Active">Active</option>
+                                <option value="assigned">Assigned</option>
+                                <option value="live">Live</option>
+                                <option value="completed">Completed</option>
+                                <option value="exhausted">Exhausted</option>
+                                <option value="removed">Removed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                            <input sty type="text" ngxDaterangepickerMd [formControl]="filterDate"
+                                [locale]="{applyLabel: 'o', format: 'DD-MM-YYYY'}" (change)="apply_filter()"
+                                startKey="start" endKey="end" placeholder="Select Date Range"
+                                style="height: 35px;border-radius: 5px;border: none;box-shadow: 0 0 4px 0px #B6B2B2; padding: 20px">
+                        </div>
+                    </form>
                 </div>
                 <div class="col-6">
                     <div style="display: flex;justify-content:flex-end">
@@ -36,25 +41,31 @@
                     <thead>
                         <tr style="border: 1px solid #484444;">
                             <th style="border-right: 1px solid gray;">NO.</th>
+                            <th style="border-right: 1px solid gray;">Date & Time</th>
                             <th style="border-right: 1px solid gray;">Product</th>
                             <th style="border-right: 1px solid gray;">Quantity</th>
                             <th style="border-right: 1px solid gray;">Market Price</th>
-                            <th style="border-right: 1px solid gray;">Date</th>
                             <th style="border-right: 1px solid gray;">offerPrice</th>
-                            <!-- <th style="border-right: 1px solid gray;">Image & Teaser</th> -->
+                            <th style="border-right: 1px solid gray;">Stream Name</th>
+                            <th style="border-right: 1px solid gray;">Stream Duration</th>
+                            <th style="border-right: 1px solid gray;">Status</th>
                             <th style="border-right: 1px solid gray;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr style="border: 1px solid #d8d8d8;" *ngFor="let item of my_posts; index as i">
                             <td style="border-right: 1px solid #d8d8d8;">{{i+1+(10*displaycount)}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.created|date:"dd-MM-yyyy"}}
+                                {{item.created|date:"hh:mm a"}}</td>
                             <td style="border-right: 1px solid #d8d8d8;cursor: pointer;"> <a style="color: blue;"
                                     (click)="view_image('content',item)">{{item.productName}}</a></td>
                             <td style="border-right: 1px solid #d8d8d8;">{{item.quantity}}</td>
                             <td style="border-right: 1px solid #d8d8d8;">{{item.marketPlace}}</td>
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.created|date:"dd-MM-yyyy"}}
-                                {{item.created|date:"hh:mm a"}}</td>
+
                             <td style="border-right: 1px solid #d8d8d8;">{{item.offerPrice}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">-</td>
+                            <td style="border-right: 1px solid #d8d8d8;">-</td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.status}}</td>
                             <td style="border-right: 1px solid #d8d8d8;">
                                 <button type="button" class="btn btn-danger btn-sm"
                                     style="padding: 5px 10px; margin-right: 10px;"
