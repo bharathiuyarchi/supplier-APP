@@ -1,0 +1,143 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+<app-header></app-header>
+
+
+
+<div class="container-fluid p-40">
+
+	 <div class="u_card">
+         <div class="card-header d-flex justify-content-between">
+         <div class="header-title">
+      <h4 class="card-title">Add New Course</h4>
+
+   </div>
+</div>
+
+	<div class="card-body">
+			<div class="row">
+				<div class="col-xl-3 pe-5 border-right">
+					<div class="upload-icon">
+						<div class="userprofileimg upload">
+							<div class="image-upload ">
+
+
+								  <label for="file-input">
+								   	<img src="assets/images/upload_img.png" class="img-fluid" width="50%">
+							   </label>
+						</div>
+					</div>
+						Drap and Drop a file here or click
+		
+					</div>
+				</div>
+
+
+				<div class="col-sm-9">
+						<div class="col-sm-12">
+							<div class="form-floating mb-3">
+							  <input type="text" class="form-control" id="firstname" placeholder="First Name">
+							  <label for="firstname">Course Name</label>
+							</div>
+						</div>
+
+
+				<div class="col-sm-12">
+					<div class="form-floating mb-3 text-area">
+					<textarea type="textarea" class="form-control" placeholder="Description"></textarea>
+						<label for="firstname">Course Description</label>
+					
+				</div>
+			</div>
+
+
+
+<div class="row">
+<div class="col-sm-6">
+	<div class="form-floating">
+  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+    <option selected>Open this select Category</option>
+    <option value="1">Policies</option>
+    <option value="2">Procedures</option>
+    <option value="3">Skill</option>
+  </select>
+  <label for="floatingSelect">Select Category</label>
+</div>
+</div>
+			
+
+
+			<div class="col-sm-6">
+						<div class="form-floating">
+					  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+					    <option selected>Open this to assign team</option>
+					    <option value="1">Anna Sthesia</option>
+					    <option value="2">Brock Lee</option>
+					    <option value="3">Eric Shun</option>
+					    <option value="2">Marge Arita</option>
+					    <option value="3">Eric Shun</option>
+					  </select>
+					  <label for="floatingSelect">Assign to</label>
+					</div>
+			</div>
+
+
+			</div>
+		</div>
+
+</div>
+</div>
+</div>
+
+
+ <div class="u_card">
+		<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+
+    <h2 class="accordion-header position-relative" id="headingOne">
+    	<button class="btn btn-primary admod-btn">Add Module</button>
+
+      <button class="card-title accordion-button color-accord" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Module
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+	       <div class="form-floating mb-3">
+			  <input type="text" class="form-control" id="firstname" placeholder="First Name">
+			  <label for="firstname">Module Title</label>
+			</div>
+
+			<div class="form-floating mb-3 text-area">
+				<textarea type="textarea" class="form-control" placeholder="Description"></textarea>
+				<label for="firstname">Module Discription</label>
+				
+			</div>
+
+			<div class=" mb-3">
+							<select id="skill" formcontrolname="skill" class="form-control category">
+							<option  value="">Choose Content</option>
+							<option  value="html">Video</option>
+							<option  value="css">Audio</option>
+							<option  value="javascript">Pdf</option>
+							</select>
+					</div>
+
+<div class="mb-3">
+    <input class="form-control form-control-lg form-floating file" id="formFileLg" type="file">
+</div>
+
+
+
+    </div>
+  </div>
+  </div></div></div>
+  
+  	<div class="text-end mt-4">
+		<button class="btn btn-primary me-3">Publish</button>
+			<a href="#" class="cancel-btn">Cancel</a>
+		</div>
+</div>
+</main>
+
+<app-footer></app-footer>

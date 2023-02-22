@@ -1,0 +1,116 @@
+@import "../../../assets/scss/variables";
+header{
+	box-shadow: 0 0 10px rgba(0,0,0,.05);
+	height:80px;
+	.nav{
+		background:$white;
+		.navbar-inner {
+		    padding: 0 -webkit-calc(var(--bs-gutter-x, 1rem) * 2.5);
+		    padding: 0 calc(var(--bs-gutter-x, 1rem) * 2.5);
+		}
+
+		.search-input{
+			width:auto;
+
+			.input-group-text, .form-control{
+				border-color:$bordercolor;
+			}
+
+			.input-group-text {
+			    padding-right: 2px;
+			    border-right: 0;
+			    background:$white;
+			}
+
+			.form-control{
+				border-left:0;
+				height:46px;
+				width:250px;
+			}
+			&.input-group:focus-within{
+
+				.form-control {
+			    	border-color:rgba($primary,.5);
+	    		}
+	    		.input-group-text{
+	    			border-color:rgba($primary,.5);
+	    		}
+			}
+		}
+	}
+
+	.dropdown{
+		margin:.8rem 0;
+		button.dropdown-toggle{
+			background:none;
+			padding:0;
+			border:0;
+			span{
+				text-align:right;
+				strong{
+					color:$primary;
+					display:block;
+				}
+				small{
+					text-transform:uppercase;
+					color: #89879f;
+					display:block;
+				}
+			}
+
+			img{
+				width: 55px;
+			    height: 55px;
+			    border-radius: 0.75rem;
+			}
+
+			&::after{
+				display:none;
+			}
+		}
+
+		.dropdown-menu{
+			color:#8a93ad;
+			border: 1px solid rgba(0,0,0,0);
+			min-width: 10rem;
+   			 padding: 0.5rem 0;
+   			 top:68px;
+
+		       border-radius: 0.55rem;
+	      	 box-shadow: 0 0 37px rgb(8 21 66 / 5%);
+		    .dropdown-item {
+			    display: block;
+			    width: 100%;
+			    padding: 0.5rem 1.2rem;
+			    clear: both;
+			    font-weight: 400;
+			    color: #8D8C8F;
+			    text-align: inherit;
+			    white-space: nowrap;
+			    background-color: transparent;
+			    border: 0;
+
+			    &:hover{
+					    color:$primary;
+					    background-color: rgba(0,0,0,0);
+			    }
+			}
+		}
+
+		.dropdown-menu[data-bs-popper]{
+			animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+		}
+	}
+}
+
+
+
+@media (min-width: 1200px){
+	header{
+		.nav{
+			.navbar-brand {
+		    	display: none;
+	    	}
+		}
+	}
+}

@@ -1,0 +1,41 @@
+
+
+<section class="">
+    <div class="px-2 mb-5 px-md-5 text-center text-lg-start">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center login-form">
+                <div class="col-lg-7 mb-5 mb-lg-0">
+                </div>
+                <div class="col-lg-5 mb-5 mb-lg-0" style="margin-left: 29%;
+                margin-top: 6%;">
+                    <div class="card">
+                        <div class="card-body py-3 px-md-5">
+                            <h4 style="text-align: center;margin-bottom: 20px;">Already Customer</h4>
+                            <form [formGroup]="ForgotPass" (submit)="forgot()" #ngForm="ngForm">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example3" >Enter Mobile Number</label>
+                                    <input type="email" id="form3Example3" class="form-control" formControlName="mobileNumber"
+                                    onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                    pattern="[6789][0-9]{9}" maxlength="10"/>
+                                    <label class="form-label error-message"
+                                        *ngIf="submitted && ForgotPass.get('mobileNumber')?.invalid "
+                                        for="form3Example4" style="color: red;">
+                                        Enter Valid mobilenumber!</label>
+                                    <label class="form-label error-message" *ngIf="error_message !=null"
+                                        for="form3Example4">{{error_message}}</label>
+                                </div>
+                                <div class="form-check  justify-content-center mb-4">
+                                  
+                                    <button type="submit" class="btn btn-primary btn-block mb-4"
+                                        style="float: right;width: 49%;">
+                                        Send OTP
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

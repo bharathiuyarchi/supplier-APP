@@ -1,0 +1,100 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+  <app-header></app-header>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="card-box">
+          <div class="card">
+            <div class="card-header">
+              <h4 style="text-align: center;font-weight: bold;color: #46a8d8;text-transform: capitalize;">
+                Create user</h4>
+            </div>
+            <form [formGroup]="loginForm" (submit)="onSubmitted()">
+              <div class="card-body">
+                <table class="table table-borderless post-form" style="    max-width: 600px; margin: auto;">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-flex">
+                          <span>Name</span>
+                          <span>
+                            <input type="text" name="" id="" formControlName="Name">
+                          </span>
+
+                        </div>
+                        <p class="error-message">
+                          <span *ngIf="isSubmitted && loginForm.get('Name').invalid"> Enter Name</span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-flex">
+                          <span>Email</span>
+                          <span>
+                            <input type="text" name="" id="" formControlName="mail">
+                          </span>
+
+                        </div>
+                        <p class="error-message">
+                          <span *ngIf="isSubmitted && loginForm.get('mail').invalid"> Enter Email</span>
+                        </p>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="form-flex">
+                          <span>Phone number</span>
+                          <span>
+                            <input type="number" name="" id="" formControlName="phoneNumber"
+                              (keypress)="numberOnly($event)">
+                          </span>
+                        </div>
+                        <p class="error-message">
+                          <span *ngIf="isSubmitted && loginForm.get('phoneNumber').invalid"> Enter Phone number</span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-flex">
+                          <span>User Role</span>
+                          <span>
+                            <select formControlName="role">
+                              <option [ngValue]="null" disabled selected>Select</option>
+                              <option value="chat">Chat</option>
+                              <option value="stream">Stream</option>
+                              <option value="chat/stream">Chat/Stream</option>
+                            </select>
+                          </span>
+                        </div>
+                        <p class="error-message">
+                          <span *ngIf="isSubmitted && loginForm.get('role').invalid">Select Role</span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-flex">
+                          <span></span>
+                          <span> <button class="btn btn-primary" style="width: 30%;">Submit</button></span>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</main>

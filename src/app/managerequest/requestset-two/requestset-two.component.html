@@ -1,0 +1,67 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card-box">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;font-weight: bold;color: #46a8d8;text-transform: capitalize;">Stream Details Step 2</h4>
+                        </div>
+                        <form [formGroup]="step_two" (submit)="step_two_complete()">
+                            <div class="card-body">
+                                <table class="table table-borderless post-form"
+                                    style="    max-width: 600px; margin: auto;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span>Select Plan</span>
+                                                    <span>
+                                                        <select class="btn" name="" id=""
+                                                            formControlName="plan_name">
+                                                            <option  [ngValue]="null" disabled selected>Select Plan</option>
+                                                            <option *ngFor="let item of myOrders"
+                                                                value="{{item._id}}" [disabled]="!item.available">
+                                                                {{item.planName}} - {{item.numberOfParticipants}} - {{item.numberofStream}} -  {{item.max_post_per_stream}}  </option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && step_two.get('categoryId')?.invalid">Select
+                                                        Category</span>
+                                                </p>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span>
+
+                                                    </span>
+                                                    <span>
+                                                        <button class="btn btn-primary"
+                                                            style="width: 100%;">Submit</button>
+                                                    </span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        
+
+                                    </tbody>
+                                </table>
+                                <a [routerLink]="['/my-plans/purchase-plans']">Go Purchase</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</main>

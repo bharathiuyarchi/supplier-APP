@@ -1,0 +1,57 @@
+
+.number-font {
+    font-weight: 600!important;
+}
+
+.bg-primary-gradient {
+    background: linear-gradient(to bottom right,#9e88f5 0,#6259ca)!important;
+}
+.ms-auto, .mx-auto {
+    margin-left: auto!important;
+}
+.brround {
+    border-radius: 50%!important;
+}
+.box-shadow-primary {
+    box-shadow: 0 5px 10px #c4cdeb;
+}
+.counter-icon {
+    margin-bottom: 1rem;
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    font-size: 24px;
+}
+
+.bg-danger-gradient {
+    background-image: linear-gradient(to bottom right,#f1bf64 0,#f71d36)!important;
+}
+
+.bg-secondary-gradient {
+    background: linear-gradient(to bottom right,#9070ff 0,#ff5d9e)!important;
+}
+.bg-success-gradient {
+    background: linear-gradient(to bottom right,#4be8d4 0,#129bd2)!important;
+}
+.box-shadow-success {
+    box-shadow: 0 5px 10px #99daea;
+}
+.card-header{
+    background:#ffffff;
+}
+.card .card-title {
+    font-weight: 500;
+}
+.card-body .team-sec{
+    padding:20px;
+}
+.course{
+    text-align:center;
+}
+.u_card {
+    .card-title{
+    font-weight:600;
+    }
+
+}

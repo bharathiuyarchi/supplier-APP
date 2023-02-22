@@ -1,0 +1,68 @@
+<div class="product-view" *ngIf="streamDetails !=null">
+    <div class="stream-title">
+        <p>{{streamDetails.streamName}}</p>
+    </div>
+    <div class="proudct-list">
+
+        <div class="row" style="margin:0;">
+            <div style="padding:0;" class="col-6" *ngFor="let item of streamDetails.streamrequestposts; index as i">
+                <div class="single-product">
+                    <img src="{{baseURL+'/'+item.productImage}}" alt="">
+                    <div class="start-button">
+                        <button class="btn start-btn" (click)="start_post(item)"
+                            *ngIf="item.streamStart==null &&primaryHost &&  streamDetails.streamrequestposts.length !=1" [disabled]="streamPending">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.6594 2.33946C12.1878 0.867863 10.188 0 7.99943 0C5.81091 0 3.77332 0.905596 2.33946 2.33946C0.905596 3.77332 0 5.77318 0 7.99943C0 10.188 0.905596 12.2255 2.33946 13.6594C3.77332 15.131 5.81091 15.9989 7.99943 15.9989C10.2257 15.9989 12.2255 15.0933 13.6594 13.6594C15.131 12.2255 15.9989 10.2257 15.9989 7.99943C16.0366 5.77318 15.131 3.77332 13.6594 2.33946ZM12.7915 12.7915C11.5841 13.999 9.88609 14.7914 7.99943 14.7914C6.11277 14.7914 4.41478 14.0367 3.20732 12.7915C1.99986 11.5841 1.20746 9.88609 1.20746 7.99943C1.20746 6.11277 1.96213 4.41478 3.20732 3.20732C4.45251 1.99986 6.15051 1.20746 7.99943 1.20746C9.84836 1.20746 11.5464 1.96212 12.7538 3.16959L12.7915 3.20732C13.999 4.41478 14.7914 6.11277 14.7914 7.99943C14.7914 9.88609 14.0367 11.5841 12.7915 12.7915Z"
+                                    fill="#48D391" />
+                                <path
+                                    d="M5.69776 3.2073L9.43334 5.35809L13.1689 7.50888C13.4331 7.65982 13.5085 7.99942 13.3576 8.26355C13.2821 8.33901 13.2067 8.41448 13.1312 8.48995L9.39561 10.6407L5.66002 12.7915C5.39589 12.9425 5.05629 12.867 4.90536 12.6029C4.86763 12.4897 4.8299 12.4142 4.8299 12.301V7.99942V3.6601C4.8299 3.35824 5.05629 3.13184 5.35816 3.13184C5.50909 3.13184 5.62229 3.16957 5.69776 3.2073Z"
+                                    fill="#48D391" />
+                            </svg>
+
+                            Start</button>
+                        <button class="btn end-button"
+                            *ngIf="item.streamStart !=null && item.streamEnd==null && primaryHost  && streamDetails.streamrequestposts.length !=1"
+                            (click)="end_post(item)">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.6594 2.33946C12.1878 0.867863 10.188 0 7.99943 0C5.81091 0 3.77332 0.905596 2.33946 2.33946C0.905596 3.77332 0 5.77318 0 7.99943C0 10.188 0.905596 12.2255 2.33946 13.6594C3.77332 15.131 5.81091 15.9989 7.99943 15.9989C10.2257 15.9989 12.2255 15.0933 13.6594 13.6594C15.131 12.2255 15.9989 10.2257 15.9989 7.99943C16.0366 5.77318 15.131 3.77332 13.6594 2.33946ZM12.7915 12.7915C11.5841 13.999 9.88609 14.7914 7.99943 14.7914C6.11277 14.7914 4.41478 14.0367 3.20732 12.7915C1.99986 11.5841 1.20746 9.88609 1.20746 7.99943C1.20746 6.11277 1.96213 4.41478 3.20732 3.20732C4.45251 1.99986 6.15051 1.20746 7.99943 1.20746C9.84836 1.20746 11.5464 1.96212 12.7538 3.16959L12.7915 3.20732C13.999 4.41478 14.7914 6.11277 14.7914 7.99943C14.7914 9.88609 14.0367 11.5841 12.7915 12.7915Z"
+                                    fill="#FF0000" />
+                                <path d="M11.9614 4.0752H4.0752V11.9614H11.9614V4.0752Z" fill="#FF0000" />
+                            </svg>
+
+                            End</button>
+                        <button class="btn end-button" style="color: white;font-weight: bold;background: black;"
+                            *ngIf="item.streamStart !=null && item.streamEnd!=null  && streamDetails.streamrequestposts.length !=1" (click)="end_post(item)">
+                            Completed</button>
+                    </div>
+                    <p class="product-title"><span>{{item.productTitle}}</span> <span
+                            *ngIf="item.streamStart !=null && item.streamEnd==null">{{item.offerPrice |
+                            currency:"INR"}}</span> </p>
+
+                    <p class="cart-details" *ngIf="item.streamStart !=null && item.streamEnd==null">
+                        <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="path-1-inside-1_1028_2255" fill="white">
+                                <rect width="16" height="4.5" rx="0.5" />
+                            </mask>
+                            <rect width="16" height="4.5" rx="0.5" stroke="#48D391" stroke-width="2"
+                                mask="url(#path-1-inside-1_1028_2255)" />
+                            <mask id="path-2-inside-2_1028_2255" fill="white">
+                                <rect x="0.799988" y="4" width="14.4" height="10.4" rx="0.5" />
+                            </mask>
+                            <rect x="0.799988" y="4" width="14.4" height="10.4" rx="0.5" stroke="#48D391"
+                                stroke-width="2" mask="url(#path-2-inside-2_1028_2255)" />
+                            <rect x="9.41992" y="0.5" width="6.12727" height="3" transform="rotate(90 9.41992 0.5)"
+                                fill="white" stroke="#48D391" />
+                        </svg>
+
+                        <span style="margin-left: 10px;"> Sold- 100/{{item.quantity}}</span>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

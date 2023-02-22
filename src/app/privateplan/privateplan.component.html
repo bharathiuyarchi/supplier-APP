@@ -1,0 +1,97 @@
+<main class="main_content" *ngIf="error ==null">
+    <div class="container">
+        <div class="row mt-3" *ngIf="plan_details !=null">
+            <div class="col-12">
+                <div class="card-box">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;font-weight: bold;color: #46a8d8;text-transform: capitalize;">
+                                {{plan_details.planName}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-borderless" style="    max-width: 500px; margin: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td>Supplier Name</td>
+                                        <td>:</td>
+                                        <td>{{link.suppliers.primaryContactName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Offer Price</td>
+                                        <td>:</td>
+                                        <td><i class="fa fa-rupee"></i>{{plan_details.salesPrice}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Regular Price</td>
+                                        <td>:</td>
+                                        <td style="text-decoration:line-through;"><i
+                                                class="fa fa-rupee"></i>{{plan_details.regularPrice}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Duration</td>
+                                        <td>:</td>
+                                        <td>{{plan_details.Duration}} <b style="font-size:11px;"> (minutes)</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Number of Stream</td>
+                                        <td>:</td>
+                                        <td>{{plan_details.numberofStream}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Number Of Participants</td>
+                                        <td>:</td>
+                                        <td>{{plan_details.numberOfParticipants}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Validity of Plan</td>
+                                        <td>:</td>
+                                        <td>{{plan_details.validityofplan}} <b style="font-size:11px;"> days</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chat Need</td>
+                                        <td>:</td>
+                                        <td style="text-transform: capitalize;">{{plan_details.chatNeed}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Commision</td>
+                                        <td>:</td>
+                                        <td>{{plan_details.commition_value}} ({{plan_details.commision}})</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Max Post Per Stream</td>
+                                        <td>:</td>
+                                        <td>{{plan_details.max_post_per_stream}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Stream Expiry</td>
+                                        <td>:</td>
+                                        <td>30 days</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="mt-3" style="max-width: 500px;margin:auto">
+                                <button class="btn btn-primary" style="width: 100%;" (click)="pay_now()">Pay <i
+                                        class="fa fa-rupee"></i>
+                                    {{plan_details.salesPrice}}</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="error-message" *ngIf="error !=null">
+    <div class="alert alert-warning alert-dismissible fade show" *ngIf="error=='Plan Already Purchased'"
+        style="text-align: center;">
+        Plan <strong>Already</strong> Purchased ! <a [routerLink]="['/login']">Go Back</a>.
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" *ngIf="error !='Plan Already Purchased'"
+        style="text-align: center;">
+        Plan <strong>Link </strong> Expired ! <a [routerLink]="['/login']">Go Back</a>.
+    </div>
+</div>

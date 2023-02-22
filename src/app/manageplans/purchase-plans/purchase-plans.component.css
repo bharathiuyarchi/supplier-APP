@@ -1,0 +1,15 @@
+.list-boxes ol{
+    list-style-type: none;
+}
+.list-boxes ol .available{
+    color: green;;
+}
+
+.list-boxes ol .notavailable{
+    color: red;
+
+}
+
+.list-boxes ol li{
+    margin-top: 15px;
+}

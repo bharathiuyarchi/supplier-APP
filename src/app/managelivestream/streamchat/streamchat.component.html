@@ -1,0 +1,38 @@
+<div class="chat-box">
+    <div class="chat-title">
+        <span>Chat</span>
+    </div>
+    <div class="contant-box">
+        <ol style="margin-top: 12px;    padding-right: 22px;">
+            <ng-container *ngFor="let item of this.addpro.value;index as i">
+
+                <li class="message-others" *ngIf="item.type=='others'">
+                    <div style="height: 38px;background: #8888de;color: white;border-radius: 50%;">{{item.userName[0]}}
+                    </div>
+                    <div>
+                        <p>{{item.userName}}</p>
+                        <span style=" word-break: break-word; ">{{item.text}}</span>
+                    </div>
+                </li>
+                <li class="message-me" *ngIf="item.type=='me'">
+                    <div>
+                        <span style=" word-break: break-word; "> {{item.text}}</span>
+                    </div>
+                </li>
+            </ng-container>
+
+        </ol>
+    </div>
+    <form (submit)="send_now()" style="padding-top: 10px;padding:10px 20px 0;" *ngIf="sub !=null&& sub.chatPermistion">
+        <div class="chat-box-form" style="height: 100%;">
+            <div class="fixed-box">
+                <input type="text" name="" id="chat-boxs" [formControl]="type_message"
+                    placeholder="Enter Message ..........">
+                <button type="submit">
+                    <i class="fa fa-send"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>

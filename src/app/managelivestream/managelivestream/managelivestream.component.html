@@ -1,0 +1,154 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+
+    <div class="container-fluid">
+        <div class="row" *ngIf="my_stream !=null">
+            <h5 class="title-menu mt-3" style="text-align: center;">Approved Requirements</h5>
+            <div style="display: flex;justify-content:flex-end">
+            </div>
+            <p *ngIf="my_stream.length ==0" style="text-align: center;margin-top: 30px;">No Stream Yet</p>
+            <div class="col-12" *ngIf="my_stream.length !=0">
+                <table class="table table-borderless mt-4 table_all_orders">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.no</th>
+                            <th>Stream Name</th>
+                            <th>Booking Amount</th>
+                            <th>Stream Date</th>
+                            <th>Post Count</th>
+                            <th>Request Date</th>
+                            <th>Stream Start & End</th>
+                            <th>SR/NOP </th>
+                            <th>Add NOP</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of my_stream; index as i">
+                            <td>{{i+1+(10*displaycount)}}</td>
+                            <td><a style="color: blue;cursor: pointer;" data-bs-toggle="modal"
+                                    data-bs-target="#viewstream" (click)="view_stream(item)">{{item.streamName}}</a>
+                            </td>
+                            <td>{{item.bookingAmount}}</td>
+                            <td>{{item.streamingDate}}{{item.streamingTime}}</td>
+                            <td>{{item.postCount}} / {{item.max_post_per_stream}}</td>
+                            <td>{{item.created|date:'dd-MM-yyyy'}}</td>
+                            <td>{{item.startTime|date:'hh:mm a'}} & {{item.endTime|date:'hh:mm a'}}</td>
+                            <td>{{item.registeredUsers}} / {{item.noOfParticipants}}</td>
+                            <td> <a class="btn btn-success btn-sm" *ngIf="iso < item.startTime"
+                                    style="padding: 6px 8px;" [routerLink]="'/my-plans/purchase-plans'"
+                                    [queryParams]="{id:item._id}">+</a>
+                            </td>
+                            <td>
+                                <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions "
+                                    class="btn btn-success btn-sm" style="padding: 6px 8px;" (click)="go_live(item)">Go
+                                    Live</a>
+                                <span
+                                    *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
+                                    style="color:rgb(173, 31, 168);font-weight:bold">On
+                                    Going</span>
+                                <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
+                                    style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
+                                <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
+                                    style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
+                                <span *ngIf="item.status =='Cancelled' "
+                                    style="color:red;font-weight:bold">Cancelled</span>
+                                <span
+                                    *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
+                                    style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div *ngIf="totalcount !=null"
+                    style="display: flex; justify-content: right; align-items: center;margin-top: 20px;">
+                    <ul class="pagination justify-content-end pageination">
+                        <li style="font-size: 12px; padding: 8px 11px; font-weight: bold">
+                            {{ totalcount + "/" + pagetotal }}
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="displaycount == 0"
+                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                (click)="pagination(3)">
+                                <i class="fa fa-angle-double-left"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="displaycount == 0"
+                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                (click)="pagination(0)">
+                                <i class="fa fa-angle-left"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button class="btn btn-primary" style="padding: 7px 16px;border-radius: 0;margin: 0 4px;">{{
+                                page + 1
+                                }}</button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="pagetotal - 1 == displaycount"
+                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                class="page-link" (click)="pagination(1)">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="pagetotal - 1 == displaycount"
+                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                class="page-link" (click)="pagination(2)">
+                                <i class="fa fa-angle-double-right"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- <button (click)="startRecording()" class="btn btn-primary">record</button>
+        <button (click)="stopRecording()" class="btn btn-primary" style="margin-left: 10px;">stop</button>
+        <audio #audio controls [src]="audioUrl"></audio> -->
+
+    </div>
+</main>
+
+
+<div class="modal fade" id="viewstream">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" *ngIf="viewstream !=null">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>OfferPrice</th>
+                            <th>MinLots</th>
+                            <th>IncrementalLots</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let items of viewstream.streamrequestposts;index as i ">
+                            <td>{{i+1}}</td>
+                            <td>{{items.productTitle}}</td>
+                            <td>{{items.quantity}}</td>
+                            <td>{{items.offerPrice}}</td>
+                            <td>{{items.minLots}}</td>
+                            <td>{{items.incrementalLots}}</td>
+                            <td><button class="btn btn-danger"
+                                    style="padding: 5px 10px;font-size: 12px;">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" #close>Close</button>
+            </div>
+        </div>
+    </div>
+</div>

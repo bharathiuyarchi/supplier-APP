@@ -1,0 +1,10 @@
+.view_options {
+    margin-left: 10px;
+    color: blue;
+    cursor: pointer
+}
+
+.active-menu {
+    color: green !important;;
+
+}

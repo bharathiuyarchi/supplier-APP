@@ -1,0 +1,150 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card-box">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;font-weight: bold;color: #46a8d8;text-transform: capitalize;">
+                                Allot Stream</h4>
+                        </div>
+                        <form [formGroup]="postForm" (submit)="alert_stream()"
+                            *ngIf="stream_list !=null && subhost !=null">
+                            <div class="card-body">
+                                <table class="table table-borderless post-form"
+                                    style="    max-width: 600px; margin: auto;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span>Stream Name</span>
+                                                    <span style="position:relative;">
+                                                        {{stream_list.streamName}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span>Stream Date</span>
+                                                    <span style="position:relative;">
+                                                        {{stream_list.startTime|date:"dd-MM-yyyy"}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span>Stream Start - End</span>
+                                                    <span style="position:relative;">
+                                                        {{stream_list.startTime|date:"hh-mm a"}} -
+                                                        {{stream_list.endTime|date:"hh-mm a"}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="stream_list.chat_need=='yes'">
+                                            <td>
+                                                <div>
+                                                    <span> Chat</span>
+                                                    <span style="position:relative;">
+                                                        <select name="" id="" formControlName="allot_chat">
+                                                            <option value="my self">My Self</option>
+                                                            <ng-container *ngFor="let item of subhost.chat">
+                                                                <option value="{{item._id}}">{{item.Name}}</option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="stream_list.purchasedplans.no_of_host == 1 || stream_list.purchasedplans.no_of_host == 2 || stream_list.purchasedplans.no_of_host == 3">
+                                            <td>
+                                                <div>
+                                                    <span> Host 1 (primary)</span>
+                                                    <span style="position:relative;">
+                                                        <select name="" id="" formControlName="allot_host_1">
+                                                            <option value="my self"
+                                                                *ngIf="postForm.get('allot_host_3')?.value !='my self' && postForm.get('allot_host_2')?.value !='my self'">
+                                                                My Self</option>
+                                                            <ng-container *ngFor="let item of subhost.host">
+                                                                <option
+                                                                    *ngIf="postForm.get('allot_host_3')?.value !=item._id&& postForm.get('allot_host_2')?.value !=item._id"
+                                                                    value="{{item._id}}">{{item.Name}}</option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="stream_list.purchasedplans.no_of_host == 2 || stream_list.purchasedplans.no_of_host == 3">
+                                            <td>
+                                                <div>
+                                                    <span> Host 2</span>
+                                                    <span style="position:relative;">
+                                                        <select name="" id="" formControlName="allot_host_2">
+                                                            <option value="my self"
+                                                                *ngIf="postForm.get('allot_host_3')?.value !='my self' && postForm.get('allot_host_1')?.value !='my self'">
+                                                                My Self</option>
+                                                            <ng-container *ngFor="let item of subhost.host">
+                                                                <option
+                                                                    *ngIf="postForm.get('allot_host_3')?.value !=item._id&& postForm.get('allot_host_1')?.value !=item._id"
+                                                                    value="{{item._id}}">{{item.Name}}</option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="stream_list.purchasedplans.no_of_host == 3">
+                                            <td>
+                                                <div>
+                                                    <span> Host 3</span>
+                                                    <span style="position:relative;">
+                                                        <select name="" id="" formControlName="allot_host_3">
+                                                            <option value="my self"
+                                                                *ngIf="postForm.get('allot_host_2')?.value !='my self' && postForm.get('allot_host_1')?.value !='my self'">
+                                                                My Self</option>
+                                                            <ng-container *ngFor="let item of subhost.host">
+                                                                <option
+                                                                    *ngIf="postForm.get('allot_host_2')?.value !=item._id&& postForm.get('allot_host_1')?.value !=item._id "
+                                                                    value="{{item._id}}">{{item.Name}}</option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span></span>
+                                                    <span>
+                                                        <button class="btn btn-primary"
+                                                            style="width: 100%;">Submit</button>
+                                                    </span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</main>

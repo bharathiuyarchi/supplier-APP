@@ -1,0 +1,52 @@
+<section class="">
+    <div class="px-2 mb-5 px-md-5 text-center text-lg-start">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center login-form">
+                <div class="col-lg-7 mb-5 mb-lg-0">
+                </div>
+                <div class="col-lg-5 mb-5 mb-lg-0" style="margin-left: 29%;
+                margin-top: 6%;">
+                    <div class="card">
+                        <div class="card-body py-3 px-md-5">
+                            <h4 style="text-align: center;margin-bottom: 20px;">Set Password</h4>
+                            <form [formGroup]="setpassword" (submit)="setpassword_now()">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example3">Password</label>
+                                    <div class="password-field">
+                                        <input type="password" id="form3Example3" class="form-control"
+                                            formControlName="password" name="password" #show_now />
+                                        <i class="fa fa-eye show_now" (click)="show_password(show_now,$event )"></i>
+                                    </div>
+                                    <label class="form-label error-message"
+                                        *ngIf="submitted && setpassword.get('password')?.invalid"
+                                        for="form3Example4" style="color: red;">Enter Valid Password!</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example3">Confirm Password</label>
+                                    <div class="password-field">
+                                        <input type="password" id="form3Example3" class="form-control"
+                                            formControlName="confirmpassword" name="repassword" #show_nowre />
+                                        <i class="fa fa-eye show_now" (click)="show_password(show_nowre,$event)"></i>
+
+                                    </div>
+                                    <label class="form-label error-message"
+                                        *ngIf="submitted && setpassword.get('confirmpassword')?.invalid || submitted && setpassword.get('password')?.value !=setpassword.get('confirmpassword')?.value"
+                                        for="form3Example4" style="color: red;">Password Not match</label>
+                                    <label class="form-label error-message" *ngIf="error_message !=null"
+                                        for="form3Example4" >{{error_message}}</label>
+                                </div>
+                                <div class="form-check  justify-content-center mb-4">
+                                    <button type="submit" class="btn btn-primary btn-block mb-4"
+                                        style="float: right;width: 49%;">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

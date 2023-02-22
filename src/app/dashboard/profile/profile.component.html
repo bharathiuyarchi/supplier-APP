@@ -1,0 +1,77 @@
+<app-sidebar></app-sidebar>
+<main class="main_content profilepage">
+	<app-header></app-header>
+
+
+
+	<div class="container-fluid">
+		<div class="row" style="margin:0px">
+			<div class="col-12">
+				<h1 style="text-align: center;font-size: 25px ; margin-top: 10px;  color: rgb(171, 15, 15); ">My Account
+				</h1>
+			</div>
+
+
+			<div class="container">
+				<div class="tab-content" style="margin: 0; padding: 0px;">
+					<div id="menu0" class="container tab-pane active">
+						<div class="col-12">
+							<div class="form_controller">
+
+								<form>
+
+
+									<div class="table table-fixed" style="max-width: 90%; margin: auto"
+										*ngIf="datata !=null">
+										<div>
+
+											<div style="display: flex; justify-content: space-between">
+												<span>
+													<b>Trade Name:</b>
+												</span>
+												<span style="width: 60%">:{{datata.data.tradeName}} </span>
+											</div>
+											<div style="display: flex; justify-content: space-between">
+												<span>
+													<b>Company Type:</b>
+												</span>
+												<span style="width: 60%">: {{datata.data.companytype}}</span>
+											</div>
+											<div style="display: flex; justify-content: space-between">
+												<span>
+													<b>Contact Name:</b>
+												</span>
+												<span style="width: 60%">:{{datata.data.primaryContactName}} </span>
+											</div>
+											<div style="display: flex; justify-content: space-between">
+												<span>
+													<b>Contact No:</b>
+												</span>
+												<span style="width: 60%">:{{datata.data.primaryContactNumber}}</span>
+											</div>
+
+
+											<div style="display: flex; justify-content: space-between">
+												<span>
+													<b>Product Dealing with:</b>
+												</span>
+												<span style="width: 60%">:
+													<span *ngFor="let item of datata.products">{{item}}, </span>
+												</span>
+											</div>
+										</div>
+									</div>
+
+
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</main>

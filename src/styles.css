@@ -1,0 +1,11 @@
+.disabeld{
+	cursor: no-drop;
+    color: gray;
+}
+
+.active-btn{
+	background: white;
+    color: black;
+    border: none;
+    border: 0.2px solid #cac7c7;
+}

@@ -1,0 +1,37 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+  <app-header></app-header>
+  <div class="container-fluid">
+    <div class="row">
+      <h5 class="title-menu mt-3" style="text-align: center;">Manage User</h5>
+      <div style="display: flex;justify-content:flex-end">
+        <button class="btn btn-primary btn-sm" style="float: right;margin-right: 10px;" routerLink="manageallot">Manage
+          Allot
+          Stream</button>
+        <button class="btn btn-primary btn-sm" style="float: right;" routerLink="/crateSubUser">Add user</button>
+      </div>
+
+
+      <table class="table table-borderless mt-4 table_all_orders">
+        <thead>
+          <tr>
+            <th>S.no</th>
+            <th>Name</th>
+            <th>Mail Id</th>
+            <th>Phone number</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let users of user;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{users.Name}}</td>
+            <td>{{users.mail}}</td>
+            <td>{{users.phoneNumber}}</td>
+            <td>{{users.role}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

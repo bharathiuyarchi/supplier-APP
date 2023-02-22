@@ -1,0 +1,379 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card-box">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;font-weight: bold;color: #46a8d8;text-transform: capitalize;">
+                                Create Post</h4>
+                        </div>
+                        <form [formGroup]="postForm" (submit)="create_post()">
+                            <div class="card-body">
+                                <table class="table table-borderless post-form"
+                                    style="    max-width: 600px; margin: auto;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span>Select Category</span>
+                                                    <span>
+                                                        <select class="btn" name="" id="" (change)="change_cate($event)"
+                                                            formControlName="categoryId">
+                                                            <option [ngValue]="null" disabled selected>Select Category
+                                                            </option>
+                                                            <option *ngFor="let item of category_list"
+                                                                value="{{item.id}}">
+                                                                {{item.categoryName}}</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('categoryId')?.invalid">Select
+                                                        Category</span>
+                                                </p>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Select Product</span>
+                                                    <span>
+                                                        <select class="btn" name="" id="" formControlName="productId">
+                                                            <option [ngValue]="null" disabled selected>Select Product
+                                                            </option>
+                                                            <ng-container *ngIf="productList !=null">
+
+                                                                <option *ngFor="let item of productList"
+                                                                    value="{{item.id}}">
+                                                                    {{item.productTitle}}</option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('productId')?.invalid">Select
+                                                        Product</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Description</span>
+                                                    <span>
+                                                        <textarea name="" id="" cols="30" rows="10"
+                                                            formControlName="discription"
+                                                            (keypress)="maxlengths($event, 250)"
+                                                            style="height: 120px;width: 100%;"
+                                                            (paste)="(false)"></textarea>
+                                                        <span
+                                                            style="text-align: right;float: right; font-weight: bold;">{{postForm.get('discription')?.valid?postForm.get('discription')?.value.length:0}}/250</span>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('discription')?.invalid">Enter
+                                                        Description</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Quantity</span>
+                                                    <span style="position:relative;">
+                                                        <input type="text" name="" id=""
+                                                            onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                                            formControlName="quantity">
+                                                        <span class="unit-value">KG</span>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('quantity')?.invalid">Enter
+                                                        Quantity</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Location</span>
+                                                    <span style="position:relative;">
+                                                        <input type="text" name="" id="" formControlName="location">
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('location')?.invalid">Enter
+                                                        Location</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 16px;font-weight:bold">During Live Streaming</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Market Price</span>
+                                                    <span style="position:relative;">
+                                                        <input type="text" name="" id=""
+                                                            onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                                            formControlName="marketPlace">
+                                                        <span class="unit-value">KG</span>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('marketPlace')?.invalid">Enter
+                                                        Market Price</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Offer Price</span>
+                                                    <span style="position:relative;">
+                                                        <input type="text" name="" id=""
+                                                            onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                                            formControlName="offerPrice">
+                                                        <span class="unit-value">KG</span>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('offerPrice')?.invalid">Enter
+                                                        Offer Price</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-flex">
+                                                    <span > Booking Amount</span>
+                                                    <span style="display: flex;align-items: center;">
+                                                        <div
+                                                            style="display: flex; align-items: center;    width: 55px;">
+                                                            <label for="bookingAmount">Yes</label>
+                                                            <input type="radio" name="bookingAmount" value="yes"
+                                                                id="bookingAmount" formControlName="bookingAmount">
+                                                        </div>
+                                                        <div
+                                                            style="display: flex; align-items: center; margin-left: 20px;    width: 55px;margin-left: 25px;">
+                                                            <label for="bookingAmount_no">No</label>
+                                                            <input type="radio" name="bookingAmount"
+                                                                id="bookingAmount_no" value="no"
+                                                                formControlName="bookingAmount">
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span
+                                                        *ngIf="submited  && postForm.get('bookingAmount')?.invalid">Choose
+                                                        Booking Amount</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-flex">
+                                                    <span style="width: 40%;"> Do you wish to sell after live streaming</span>
+                                                    <span style="display: flex;align-items: center;">
+                                                        <div
+                                                            style="display: flex; align-items: center;    width: 55px;">
+                                                            <label for="afterStreaming">Yes</label>
+                                                            <input type="radio" name="afterStreaming" value="yes"
+                                                                id="afterStreaming" formControlName="afterStreaming"
+                                                                (change)="afterStreaming($event)">
+                                                        </div>
+                                                        <div
+                                                            style="display: flex; align-items: center; margin-left: 20px;    width: 55px;margin-left: 25px;">
+                                                            <label for="afterStreaming_no">No</label>
+                                                            <input type="radio" name="afterStreaming"
+                                                                id="afterStreaming_no" value="no"
+                                                                formControlName="afterStreaming"
+                                                                (change)="afterStreaming($event)">
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span
+                                                        *ngIf="submited  && postForm.get('afterStreaming')?.invalid">Choose
+                                                        Any of the above</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="postForm.get('afterStreaming')?.value=='yes'">
+                                            <td>
+                                                <div>
+                                                    <span> After live Streaming</span>
+                                                    <span style="position:relative;">
+                                                        <input type="text" name="" id=""
+                                                            onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                                            formControlName="postLiveStreamingPirce">
+                                                        <span class="unit-value">KG</span>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span
+                                                        *ngIf="submited && postForm.get('postLiveStreamingPirce')?.invalid">Enter
+                                                        Streaming Price</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Minimun Lots</span>
+                                                    <span style="position:relative;">
+                                                        <input type="text" name="" id=""
+                                                            onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                                            formControlName="minLots">
+                                                        <span class="unit-value">KG</span>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span *ngIf="submited && postForm.get('minLots')?.invalid">Enter
+                                                        Minimun
+                                                        Lots</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span> Incremental lots</span>
+                                                    <span style="position:relative;">
+                                                        <input type="text" name="" id=""
+                                                            onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                                                            formControlName="incrementalLots">
+                                                        <span class="unit-value">KG</span>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span
+                                                        *ngIf="submited && postForm.get('incrementalLots')?.invalid">Enter
+                                                        Incremental lots</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="display: block;">
+
+                                                    <div class="form-flex" style="position: relative;">
+                                                        <span>Images Upload</span>
+                                                        <span *ngIf="selected_image_view.length ==0" class="over-image"
+                                                            (mouseout)="mouseout('over-image')"
+                                                            ngClass="{{oldDetails  !=null && selected_image.length==0 ?'hide-image':''}}">
+                                                            <input type="file" name="" id="image-upload"
+                                                                style="display: none;"
+                                                                accept="image/png, image/gif, image/jpeg"
+                                                                (change)="change_image($event)" [multiple]="5">
+                                                            <label for="image-upload"
+                                                                (mouseout)="mouseout('over-image')"
+                                                                class="btn btn-primary">Choose</label>
+                                                        </span>
+                                                        <span *ngIf="selected_image_view.length  !=0"
+                                                            style="display: flex;">
+                                                            <div style="display: block;position: relative;width: 20%;padding-left: 4px;"
+                                                                *ngFor="let item of selected_image_view;index as i">
+                                                                <span
+                                                                    style="font-size: 13px;position: absolute;right: 0;top: 0;padding: 0px 8px;background: red;color: white;border-radius: 50%;cursor: pointer;z-index: 100"
+                                                                    (click)="removeImageshop(item,i)">x</span>
+                                                                <img src="{{item}}" src="" alt=""
+                                                                    style="width: 100%;height: 50px;border: 2px solid gray;">
+                                                            </div>
+                                                        </span>
+                                                        <span *ngIf="oldDetails  !=null && selected_image.length==0"
+                                                            style="display: flex;"
+                                                            (mouseover)="mouseover('over-image')">
+                                                            <div style="display: block;position: relative;width: 20%;padding-left: 4px;"
+                                                                *ngFor="let item of oldDetails.images">
+                                                                <img src="{{baseURL+'/'+item}}" alt=""
+                                                                    style="width: 100%;height: 50px;border: 2px solid gray;">
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                    <p class="error-message">
+                                                        <span
+                                                            *ngIf="selected_image.length==0 && submited && id ==null">Invalid
+                                                            Image</span>
+                                                        <span *ngIf="maxlimit">Only Five Images</span>
+                                                    </p>
+
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-flex" style="position: relative;">
+                                                    <span>Teaser Upload</span>
+                                                    <span *ngIf="selected_video_view  ==null"
+                                                        (mouseout)="mouseout('over-video')" class="over-video"
+                                                        ngClass="{{oldDetails  !=null && selected_video==null ?'hide-image':''}}">
+                                                        <input type="file" name="" id="video-upload"
+                                                            style="display: none;" accept="video/mp4"
+                                                            (change)="change_video($event)">
+                                                        <label for="video-upload" class="btn btn-primary"
+                                                            (mouseout)="mouseout('over-video')"
+                                                            accept="video/mp4,video/x-m4v,video/*">Choose</label>
+                                                    </span>
+                                                    <span *ngIf="selected_video_view  !=null">
+                                                        <div
+                                                            style="display: block;position: relative;width: 20%;padding-left: 4px;">
+                                                            <span
+                                                                style="font-size: 13px;position: absolute;right: 0;top: 0;padding: 0px 8px;background: red;color: white;border-radius: 50%;cursor: pointer;z-index: 100;"
+                                                                (click)="remove_video()">x</span>
+                                                            <video src="{{selected_video_view}}"
+                                                                style="width: 100%;height: 50px;border: 2px solid gray;"></video>
+                                                        </div>
+                                                    </span>
+                                                    <span *ngIf="oldDetails  !=null && selected_video==null"
+                                                        style="display: flex;" (mouseover)="mouseover('over-video')">
+                                                        <div
+                                                            style="display: block;position: relative;width: 20%;padding-left: 4px;">
+                                                            <video src="{{oldDetails.video}}"
+                                                                style="width: 100%;height: 50px;border: 2px solid gray;"></video>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <p class="error-message">
+                                                    <span
+                                                        *ngIf="selected_video=='invalid' || submited && selected_video==null && id ==null">Invalid
+                                                        Video</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <span></span>
+                                                    <span>
+                                                        <button class="btn btn-primary"
+                                                            style="width: 100%;">Submit</button>
+                                                    </span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</main>

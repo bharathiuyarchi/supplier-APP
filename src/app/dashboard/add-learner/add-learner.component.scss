@@ -1,0 +1,80 @@
+@import "../../../assets/scss/variables";
+.profilepage{
+	.c_box{
+		padding:40px;
+		.userprofileimg{
+			position:relative;
+			img{
+				border-radius:20px;
+			}
+			.editimg-btn{
+				border-radius:50%;
+				width:50px;
+				height:50px;
+				background:$primary;
+				border:2px solid $white;
+				box-shadow:0 15px 15px rgba(0,0,0,.2);
+				color:$white;
+				text-align:center;
+				line-height:30px;
+				font-size:1.5rem;
+				position:absolute;
+				top:-15px;
+				right:-15px;
+				transition:all .3s;
+				&:hover{
+					background:$secondary;
+				}
+			}
+
+			h4{
+				font-size:1.3rem;
+				font-weight:bold;
+				text-align:center;
+				margin-top:15px;
+				// margin-botom:5px;
+			}
+
+			p{
+				text-align:center;
+				margin:0;
+			}
+		}
+	}
+
+	.border-right{
+		border-right:1px solid $bordercolor;
+	}
+
+	.profiledetails{
+		h4{
+			font-size:1rem;
+			font-weight:bold;
+		}
+	}
+}
+
+.upload-icon{
+	border:1px solid #e6ebe7;
+	padding:45px;
+}
+
+.image-upload{
+	text-align:center;
+	padding:10px;
+}
+.upload {
+	text-align:center;
+}
+
+.image-upload {
+				img {
+					opacity:.5;
+}
+}
+.file{
+	padding:15px 0 20px 20px;
+}
+.cancel-btn{
+	margin-left:20px;
+}

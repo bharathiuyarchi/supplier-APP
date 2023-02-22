@@ -1,0 +1,34 @@
+.title-menu {
+    text-align: center;
+}
+
+.table_all_orders {
+    max-width: 90%;
+    margin: auto;
+}
+
+.view_options {
+    margin-left: 10px;
+    color: blue;
+    cursor: pointer
+}
+
+.active-menu {
+    color: green !important;
+    ;
+
+}
+
+.filter-form {
+    max-width: 80%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-form select{
+    box-shadow: 0 0 2px 1px #a19e9e;
+    padding: 9px 20px;
+
+}

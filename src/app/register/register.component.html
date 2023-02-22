@@ -1,0 +1,118 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h4 style="text-align: center;font-size: 19px ; margin-top: 10px; color: blue;"><b>Registration For Supplier</b></h4>
+        </div>
+        <!-- <div class="col-12">
+            <button class="btn btn-primary import_button">Import</button>
+            <a [routerLink]="['../../managesuppliers']" style="padding: 2px 6px;" class="btn btn-primary import_button">Manage</a>
+        </div>
+        -->
+        <div class="col-12"> 
+            <div class="form_controller">
+                <form [formGroup]="supplier" >
+
+                    <p class="form-label error-message" *ngIf="isdisplay"
+                    for="form3Example4" style="color: red;    margin-left: 88px;">This number is already Registered</p>
+                    <div class="row">
+                        <!-- name -->
+                        <div class="form_singlerow" >
+                            <label for="tradename">Trade Name</label>
+                            <input type="text" formControlName="tradeName"  maxlength="50"
+                            ng-pattern="/^[a-zA-Z\s]*$/">
+                        </div>
+                        <div class="row align-items-start">
+                            <span style="color: red;text-align:center  ;  margin-left: 40px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && supplier.get('tradeName')?.invalid">Enter the Trade Name</span>
+                          </div>
+                        <!-- company name -->
+                        <div class="form_singlerow" >
+                            <label for="companytype">Business Type</label>
+                            <select formControlName="companytype">
+                                <option value="null" disabled selected>Select Business Type</option>
+                                <option>Individual</option>
+                                <option>Wholesaler</option>
+                                <option>Market Wholesaler</option>
+                                <option>Farmer</option>
+                                <option>Farmer Producing Company(FPC)</option>
+                                <option>Agent</option>
+                                
+                            </select>
+                        </div>
+                        <div class="row align-items-start">
+                            <span style="color: red;text-align:center; margin-left: 40px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && supplier.get('companytype')?.invalid">Select Company Type</span>
+                          </div>
+                        <!-- primary contact name -->
+                        <div class="form_singlerow" >
+                            <label for="primaryContactName">Contact Name</label>
+                            <input type="text" formControlName="primaryContactName"   maxlength="50"
+                            ng-pattern="/^[a-zA-Z\s]*$/">
+                        </div>
+                        <div class="row align-items-start">
+                            <span style="color: red;text-align:center; margin-left: 40px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && supplier.get('primaryContactName')?.invalid">Enter Contact Name</span>
+                          </div>
+                        <!-- primary contact number -->
+                        <div class="form_singlerow" >
+                            <label for="primaryContactNumber">Contact No</label>
+                            <input type="text" formControlName="primaryContactNumber"  onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                            pattern="[6789][0-9]{9}" 
+                             maxlength="10">
+                        </div>
+                        <label class="form-label error-message"
+                        *ngIf="prolist_sup && supplier.get('primaryContactNumber')?.invalid"
+                        for="form3Example4" style="color: red;    margin-left: 178px;">Enter ContactNumber</label>
+                        <!-- <div class="row align-items-start">
+                            <span style="color: red;text-align:center; margin-left: 70px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && supplier.get('primaryContactNumber')?.invalid || prolist_sup && supplier.get('primaryContactNumber')?.getError">Enter valid  or number is already Registered</span>
+                          </div> -->
+                        
+
+
+
+                       
+                        <!-- product dealing with -->
+
+                        <div class="form_singlerow" >
+                            <label for="Product Dealing with">Product Dealing with</label>
+                            <div class="dropdown" >
+                                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"  data-bs-auto-close="outside"> 
+                                    Select Products
+                                </button>
+                                <ul class="dropdown-menu" style="width: 340px;" >
+                                    <ng-container *ngFor="let item of cat;index as i">
+                                        <li *ngIf="item.categoryData != ''?true:false">
+                                            <h2 class="dropdown-header" ><b style="color: rgb(233, 41, 50);">{{item.categoryName}}</b></h2>
+                                            <div *ngFor="let data of item.categoryData; let i=index">
+                                                <input style="width: 30%" type="checkbox" [value]="data._id"
+                                                    (change)="oncheckboxchange($event)" >
+                                                {{data.productTitle}}
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-start">
+                            <span style="color: red;text-align:center;  margin-left: 30px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && supplier.get('productDealingWith')?.invalid">Select Product</span>
+                          </div>
+
+                        <button style="padding: 0px 6px; margin-left: 41%; width: 110px; background: #084298;" class="btn btn-primary"
+                            type="submit" (click)="supplier_create()">Register</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,285 @@
+// @import "../../../assets/scss/variables";
+// .profilepage{
+// 	.c_box{
+// 		padding:40px;
+// 		.userprofileimg{
+// 			position:relative;
+// 			img{
+// 				border-radius:20px;
+// 			}
+// 			.editimg-btn{
+// 				border-radius:50%;
+// 				width:50px;
+// 				height:50px;
+// 				background:$primary;
+// 				border:2px solid $white;
+// 				box-shadow:0 15px 15px rgba(0,0,0,.2);
+// 				color:$white;
+// 				text-align:center;
+// 				line-height:30px;
+// 				font-size:1.5rem;
+// 				position:absolute;
+// 				top:-15px;
+// 				right:-15px;
+// 				transition:all .3s;
+// 				&:hover{
+// 					background:$secondary;
+// 				}
+// 			}
+
+// 			h4{
+// 				font-size:1.3rem;
+// 				font-weight:bold;
+// 				text-align:center;
+// 				margin-top:15px;
+// 				margin-botom:5px;
+// 			}
+
+// 			p{
+// 				text-align:center;
+// 				margin:0;
+// 			}
+// 		}
+// 	}
+
+// 	.border-right{
+// 		border-right:1px solid $bordercolor;
+// 	}
+
+// 	.profiledetails{
+// 		h4{
+// 			font-size:1rem;
+// 			font-weight:bold;
+// 		}
+// 	}
+// }
+
+// .editimg-btn .company-setting{
+// 	img{
+// 	right:90px;
+// 	}
+// }
+// .company-title{
+// 	font-weight:bold;
+// }
+
+//        .text-box {
+	       
+// 	       padding:15px;
+	     
+// }
+	
+// .color-theme{
+// 	padding:2px;
+// 	width:60px;
+// 	&::-webkit-color-swatch{
+// 		height:48px;
+// 	}
+// 	&::-moz-color-swatch{
+// 		height:48px;
+// 	}
+
+// }
+
+// .color_code{
+// 	width:150px;
+// }
+
+@import "../../../assets/scss/variables";
+.cert_icon{
+    background-color:$primary; 
+    padding:10px; 
+    border-radius:10px; 
+    color:#ffffff; 
+    display:inline-block;
+}
+
+/* Show all Css */
+
+.pageination li {
+    margin-right: 5px;
+  }
+  
+  .pageination li a {
+    padding: 4px 11px;
+    font-size: 13px;
+  }
+  
+  .form_controller {
+    margin: auto;
+    max-width: 510px;
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 22px 26px;
+    box-shadow: 0 0 2px 2px #86929d;
+    margin-top: 20px;
+  }
+  
+  .table_all_orders tbody tr {
+    cursor: pointer;
+  }
+  
+  .table_all_orders tbody tr td div {
+    visibility: hidden;
+    margin-left: 10px;
+  }
+  
+  .table_all_orders tbody tr:hover {
+    background-color: #f3f2f2;
+  }
+  
+  .table_all_orders tbody tr:hover td div {
+    visibility: visible;
+  }
+  
+  .show_tableinvoice {
+    display: table-cell;
+  }
+  
+  .order_contact {
+    display: table-cell;
+  }
+  
+  
+  /* Add new css */
+  
+  .form_controller {
+    margin-bottom: 10px;
+  }
+  
+  .form_singlerow select {
+    width: 60%;
+    padding: 3px 11px;
+    background: white;
+    border-radius: 4px;
+  }
+  
+  .form_singlerow input {
+    width: 60%;
+  }
+  
+  .form_singlerow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .form_singlerow select option[disabled] {
+    color: #000000;
+    background: #ada5a5;
+  }
+  
+  .prodct_list {
+    border: 1px solid gray;
+    padding: 10px 22px;
+    margin-bottom: 14px;
+    border-radius: 5px;
+    background: #f1f3f2;
+  }
+  
+  .close_icon {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 10px;
+    color: #cc2e2e;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #myModalset {
+    margin-top: 62px;
+  }
+  
+  .product_title {
+    color: green;
+    font-weight: bold;
+    padding: 5px;
+    text-shadow: 1px 3px 2px grey;
+  }
+  
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  
+  .filter_product {
+    padding: 5px 12px;
+    margin-left: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+  
+  .single_row {
+    display: flex;
+    /* justify-content: space-between;
+    align-items: center;
+    */
+  }
+  
+  .single_row label {
+    width: 30%;
+  }
+  
+  table thead tr th {
+    font-size: 14px;
+  }
+  
+  table tbody tr td {
+    font-size: 13px;
+  }
+  
+  .radio {
+    width: 60%;
+    display: flex;
+    align-items: center;
+  
+  }
+  .radio div:last-child{
+    margin-left: 20px;
+  }
+  .radio div input{
+    width: unset;
+    margin-right: 10px;
+  }
+  
+  /* Mobile View Css */
+  
+  @media only screen and (max-width: 580px) {
+    .show_tableinvoice {
+      display: table-cell;
+    }
+  
+    .order_contact {
+      display: none;
+    }
+  
+    .form_controller {
+      margin: auto;
+      max-width: 510px;
+      background: #ffffff;
+      border-radius: 4px;
+      padding: 22px 10px;
+      box-shadow: 0 0 2px 2px #86929d;
+      margin-top: 20px;
+    }
+  
+    .form_controller label {
+      font-size: 14px;
+    }
+  
+    #myModalset {
+      margin-top: 73px;
+    }
+  }
+  
+  .import_button {
+    float: right;
+    padding: 2px 6px;
+    margin-right: 5px;
+  }

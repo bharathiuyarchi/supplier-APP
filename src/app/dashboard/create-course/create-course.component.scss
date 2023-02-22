@@ -1,0 +1,55 @@
+@import "../../../assets/scss/variables";
+
+.accordion-item{
+	border:0;
+	&:first-of-type .accordion-button{
+		background: none;
+	    padding: 1.5rem 1.5rem;
+	    border:0;
+	    border-bottom: 1px solid $bordercolor;
+	    border-radius:.75rem .75rem 0 0;
+	    color:$black;
+	    font-size: 1.5rem;
+	    font-weight:600;
+	    margin: 0;
+	    &:focus{
+	    	box-shadow: 0 0 0;
+	    }
+	}
+
+	.admod-btn{
+		position:absolute;
+		right:70px;
+		    padding: 10px 20px;
+		top:15px;
+		z-index:99;
+	}
+
+	.accordion-button::after{
+		background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+	}
+}
+.form-floating>.form-control:focus, .form-floating>.form-control:not(:placeholder-shown) {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+.upload-icon{
+	border:1px solid #e6ebe7;
+	padding:45px;
+}
+.image-upload{
+	text-align:center;
+	padding:10px;
+}
+.upload {
+	text-align:center;
+}
+
+.image-upload {
+				img {
+					opacity:.5;
+}
+}
+.file{
+	padding:15px 0 20px 20px;
+}

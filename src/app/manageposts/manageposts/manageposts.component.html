@@ -1,0 +1,212 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+
+    <div class="container-fluid">
+        <div class="row" *ngIf="my_posts !=null">
+            <h5 class="title-menu mt-3" style="text-align: center;">My Posts</h5>
+            <div class="row">
+                <div class="col-6">
+                    <div class="filter-form">
+                        <select name="" id="" class="btn" style="    text-align: left;">
+                            <option value="active">Active</option>
+                            <option value="assigned">Assigned</option>
+                            <option value="live">Live</option>
+                            <option value="completed">Completed</option>
+                            <option value="exhausted">Exhausted</option>
+                            <option value="removed">Removed</option>
+                        </select>
+                        <!-- <input type="text" ngxDaterangepickerMd [locale]="{applyLabel: 'o', format: 'DD-MM-YYYY'}"
+                            startKey="start" endKey="end" placeholder="Select Date Range" style="height: 35px;border-radius: 5px;border: none;box-shadow: 0 0 4px 0px #B6B2B2;padding:
+                            4px 7px;"> -->
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div style="display: flex;justify-content:flex-end">
+                        <button class="btn btn-primary" [routerLink]="['create-post']" style="float: right;">Create
+                            Post</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <p *ngIf="my_posts.length ==0" style="text-align: center;margin-top: 30px;">No Posts Yet</p>
+            <div class="col-12" *ngIf="my_posts.length !=0">
+                <table class="table table-borderless mt-4 table_all_orders">
+                    <thead>
+                        <tr style="border: 1px solid #484444;">
+                            <th style="border-right: 1px solid gray;">NO.</th>
+                            <th style="border-right: 1px solid gray;">Product</th>
+                            <th style="border-right: 1px solid gray;">Quantity</th>
+                            <th style="border-right: 1px solid gray;">Market Price</th>
+                            <th style="border-right: 1px solid gray;">Date</th>
+                            <th style="border-right: 1px solid gray;">offerPrice</th>
+                            <!-- <th style="border-right: 1px solid gray;">Image & Teaser</th> -->
+                            <th style="border-right: 1px solid gray;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border: 1px solid #d8d8d8;" *ngFor="let item of my_posts; index as i">
+                            <td style="border-right: 1px solid #d8d8d8;">{{i+1+(10*displaycount)}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;cursor: pointer;"> <a style="color: blue;"
+                                    (click)="view_image('content',item)">{{item.productName}}</a></td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.quantity}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.marketPlace}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.created|date:"dd-MM-yyyy"}}
+                                {{item.created|date:"hh:mm a"}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.offerPrice}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    style="padding: 5px 10px; margin-right: 10px;"
+                                    (click)="delete_post(item._id)">Delete</button>
+                                <a [routerLink]="['create-post']" [queryParams]="{id:item._id}">Edit</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="totalcount !=null"
+                    style="display: flex; justify-content: right; align-items: center;margin-top: 20px;">
+                    <ul class="pagination justify-content-end pageination">
+                        <li style="font-size: 12px; padding: 8px 11px; font-weight: bold">
+                            {{ totalcount + "/" + pagetotal }}
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="displaycount == 0"
+                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                (click)="pagination(3)">
+                                <i class="fa fa-angle-double-left"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="displaycount == 0"
+                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                (click)="pagination(0)">
+                                <i class="fa fa-angle-left"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button class="btn btn-primary" style="padding: 7px 16px;border-radius: 0;margin: 0 4px;">{{
+                                page + 1
+                                }}</button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="pagetotal - 1 == displaycount"
+                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                class="page-link" (click)="pagination(1)">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="pagetotal - 1 == displaycount"
+                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                class="page-link" (click)="pagination(2)">
+                                <i class="fa fa-angle-double-right"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+<div class="modal fade" id="view_details">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title" *ngIf="view_details !=null">{{view_details.productName}}</h6>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="close_popup()"></button>
+            </div>
+
+            <div class="modal-body" *ngIf="view_details !=null">
+                <div class="views">
+                    <a (click)="change_view('content')" class="view_options"
+                        ngClass="{{view_details_type=='content'?'active-menu':''}}">Details</a> |
+                    <a (click)="change_view('image')" class="view_options"
+                        ngClass="{{view_details_type=='image'?'active-menu':''}}"
+                        *ngIf="view_details.images.length !=0">Images</a> |
+                    <a (click)="change_view('video')" class="view_options" *ngIf="view_details.video !=null"
+                        ngClass="{{view_details_type=='video'?'active-menu':''}}">Teaser</a>
+                </div>
+                <div class="video-player" *ngIf="view_details_type=='video'">
+                    <video *ngIf="view_details.video !=null" src="{{view_details.video}}" controls
+                        style="width: 100%;height: 300px;"></video>
+                </div>
+                <div class="images-multible" *ngIf="view_details_type=='image'">
+                    <div class="row" *ngIf="view_details.images !=null">
+                        <div class="col-6" *ngFor="let item of view_details.images">
+                            <img src="{{baseURL+'/'+item}}" alt="" style="width: 100%;height: 150px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="images-multible" *ngIf="view_details_type=='content'">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>Product Name</td>
+                                <td>:</td>
+                                <td>{{view_details.productName}}</td>
+                            </tr>
+                            <!-- <tr>
+                                <td>categoryId</td>
+                                <td>:</td>
+                                <td>{{view_details.quantity}}</td>
+                            </tr> -->
+                            <tr>
+                                <td>Market Place</td>
+                                <td>:</td>
+                                <td>{{view_details.marketPlace}}</td>
+                            </tr>
+                            <tr>
+                                <td>Offer Price</td>
+                                <td>:</td>
+                                <td>{{view_details.offerPrice}}</td>
+                            </tr>
+                            <tr>
+                                <td>Booking Amount</td>
+                                <td>:</td>
+                                <td>{{view_details.bookingAmount}}</td>
+                            </tr>
+                            <tr *ngIf="view_details.afterStreaming=='yes'">
+                                <td>PostLiveStreamingPirce</td>
+                                <td>:</td>
+                                <td>{{view_details.postLiveStreamingPirce}}</td>
+                            </tr>
+                            <tr>
+                                <td>Location</td>
+                                <td>:</td>
+                                <td>{{view_details.location}}</td>
+                            </tr>
+                            <tr>
+                                <td>MinLots</td>
+                                <td>:</td>
+                                <td>{{view_details.minLots}}</td>
+                            </tr>
+                            <tr>
+                                <td>IncrementalLots</td>
+                                <td>:</td>
+                                <td>{{view_details.incrementalLots}}</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>:</td>
+                                <td style="overflow-wrap: anywhere;">{{view_details.discription}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" style="padding: 10px;" data-bs-dismiss="modal"
+                    (click)="close_popup()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

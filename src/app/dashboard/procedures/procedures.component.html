@@ -1,0 +1,196 @@
+<app-sidebar></app-sidebar>
+
+<!--router-outlet></router-outlet-->
+<main class="main_content">
+	<app-header></app-header>
+
+	
+
+	
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h4 style="text-align: center; font-size: 19px; margin-top: 10px;color: #eb0909;">
+       Request For Selling
+        </h4>
+      </div>
+      <div class="col-12">
+      <div class="row" style="padding: 100px;">
+        <div class="col-6" style="    margin-left: 26%;" >
+          <div class="flex_table">
+            <div class="form_controller">
+              <form [formGroup]="sudden_order" (submit)="create_orders()">
+                <div class="row" >
+                  <div class="form_singlerow">
+                    <label for="selectward">Select Product :</label>
+                    <select name="" id="selectward" formControlName="productid" (change)="touch($event )"
+                    >
+                      <option [ngValue]="null" disabled selected>
+                        Select Product
+                      </option> 
+                      <option
+                        *ngFor="let item of product; index as i"
+                        value="{{ item.id}}"  
+                      >
+                        {{ item.productTitle }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="row align-items-start">
+                    <span style="color: red;text-align:center; margin-left: 40px;
+                    padding-bottom: 15px;"
+                      *ngIf="prolist_sup && sudden_order.get('productid')?.invalid">select product Name</span>
+                  </div>
+                  
+                  <!-- <div class="form_singlerow">
+                    <label for="selectstreet">Type :</label>
+                    <div class="radio">
+                        <div>
+                            <input
+                              type="radio"
+                              name="order_Type"
+                              value="Voluntary"
+                              id="Voluntary"
+                             checked
+                            />
+                            <label for="Voluntary">Voluntary</label>
+                          </div>
+                    </div>
+                  </div> -->
+                  
+                  <div class="form_singlerow">
+                    <label for="selectstreet">Quantity :</label>
+                    <input
+                      type="text"
+                      id="selectstreet"
+                      style="padding: 0px 12px"
+                      formControlName="confirmOrder" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                      pattern="[6789][0-9]{9}" 
+                    />
+                  </div>
+                  <div class="row align-items-start">
+                    <span style="color: red;text-align:center; margin-left: 40px;
+                    padding-bottom: 15px;"
+                      *ngIf="prolist_sup && sudden_order.get('confirmOrder')?.invalid">Enter Confirm Quantity</span>
+                  </div>
+                  <div class="form_singlerow">
+                    <label for="selectstreet">Price :</label>
+                    <input
+                      type="text"
+                      id="selectstreet"
+                      style="padding: 0px 12px"
+                      formControlName="confirmprice" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                      pattern="[6789][0-9]{9}" 
+                    />
+                  </div>
+                  <div class="row align-items-start">
+                    <span style="color: red;text-align:center; margin-left: 40px;
+                    padding-bottom: 15px;"
+                      *ngIf="prolist_sup && sudden_order.get('confirmprice')?.invalid">Enter Confirm Price</span>
+                  </div>
+                  <!-- <div class="form_singlerow">
+                    <label for="selectstreet">EXP Date :</label>
+                    <input
+                      type="date"
+                      id="selectstreet"
+                      style="padding: 0px 12px"
+                      formControlName="exp_date"
+                      min="{{ date | date: 'yyyy-MM-dd' }}"
+                    />
+                  </div>
+                  <div class="row align-items-start">
+                    <span style="color: red;text-align:center; margin-left: 40px;
+                    padding-bottom: 15px;"
+                      *ngIf="prolist_sup && sudden_order.get('exp_date')?.invalid">Enter Expected Date</span>
+                  </div> -->
+  
+                  <!-- <div class="form_singlerow">
+                    <label for="selectward">Payment Status :</label>
+                    <select
+                      class="select_drop_button"
+                     
+                      style="
+                        margin-left: 5px;
+                        border-radius: 5px;
+                        margin-top: 8px;
+                      ">
+                      <option [ngValue]="null"  selected>
+                        Credit
+                      </option>
+
+                    </select>
+                  </div> -->
+  
+                  <button
+                  style="padding: 0px 6px; margin-left: 41%; width: 60px"
+                  class="btn btn-primary"
+                >
+                  Save
+                </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+        </div>
+
+
+      <div class="modal mt-5" id="confirm_order_now">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- <h4 class="modal-title">Confirm Sudden Order</h4> -->
+              <h3>Are you Sure?</h3>
+            </div>
+  
+            <div class="modal-body" style="width: 300px; margin: auto">
+              <div style="display: flex; justify-content: space-between">
+                <label for="">Confirm Quantity</label>
+                <b style="width: 50%" for=""
+                  >: {{ sudden_order.get("confirmOrder")?.value }}</b
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <label for="">Confirm Price</label>
+                <b style="width: 50%" for=""
+                  >: {{ sudden_order.get("confirmprice")?.value }}</b
+                >
+              </div>
+
+              <!-- <div style="display: flex; justify-content: space-between">
+                <label for="">Product Name</label>
+                <b style="width: 50%" for=""
+                  >: </b
+                >
+              </div> -->
+            </div>
+  
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+                (click)="confirm_create_orders()"
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  </div>
+  
+
+	<!-- <app-footer></app-footer> -->
+</main>

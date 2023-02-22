@@ -1,0 +1,37 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+    <div class="container-fluid">
+        <div class="row">
+            <h5 class="title-menu mt-3" style="text-align: center;">Manage Stream Allot</h5>
+            <div style="display: flex;justify-content:flex-end">
+            </div>
+            <table class="table table-borderless mt-4 table_all_orders">
+                <thead>
+                    <tr>
+                        <th>S.no</th>
+                        <th>Stream Name</th>
+                        <th>Chat</th>
+                        <th>Host 1*</th>
+                        <th>Host 2</th>
+                        <th>Host 3</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of stream_list;let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.streamName}}</td>
+                        <td><span
+                                *ngIf="item.chat_need=='yes'">{{item.allot_chat_name!=null?item.allot_chat_name:item.allot_chat}}</span>
+                        </td>
+                        <td>{{item.allot_host_1_name!=null?item.allot_host_1_name:item.allot_host_1}}</td>
+                        <td>{{item.allot_host_2_name!=null?item.allot_host_2_name:item.allot_host_2}}</td>
+                        <td>{{item.allot_host_3_name!=null?item.allot_host_3_name:item.allot_host_3}}</td>
+                        <td><a [routerLink]="['allot']" [queryParams]="{id:item._id}">Change</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>

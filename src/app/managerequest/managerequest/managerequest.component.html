@@ -1,0 +1,269 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+
+    <div class="container-fluid">
+        <div class="row" *ngIf="myrequest !=null">
+            <h5 class="title-menu mt-3" style="text-align: center;">My Stream Request</h5>
+            <div style="display: flex;justify-content:flex-end">
+                <button class="btn btn-primary btn-sm" (click)="go_to_new_stream()" style="float: right;">New
+                    Stream</button>
+            </div>
+
+            <p *ngIf="myrequest.length ==0" style="text-align: center;margin-top: 30px;">No Stream Yet</p>
+            <div class="col-12" *ngIf="myrequest.length !=0">
+                <table class="table table-borderless mt-4 table_all_orders" *ngIf="myrequest.length !=0">
+                    <thead>
+                        <tr style="border: 1px solid #484444;">
+                            <th style="border-right: 1px solid gray;">NO.</th>
+                            <th style="border-right: 1px solid gray;">Stream Name</th>
+                            <!-- <th style="border-right: 1px solid gray;">Post Type</th> -->
+                            <th style="border-right: 1px solid gray;">Post Count</th>
+                            <th style="border-right: 1px solid gray;">Streaming Date & Time</th>
+                            <!-- <th style="border-right: 1px solid gray;">Step Two</th> -->
+                            <th style="border-right: 1px solid gray;">Status</th>
+                            <th style="border-right: 1px solid gray;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border: 1px solid #d8d8d8;" *ngFor="let item of myrequest; index as i">
+                            <td style="border-right: 1px solid #d8d8d8;">{{i+1+(10*displaycount)}}</td>
+
+                            <td style="border-right: 1px solid #d8d8d8;">
+                                <a (click)="view_request('content',item)" style="color: blue;cursor: pointer;">
+                                    {{item.streamName}}</a>
+                            </td>
+                            <!-- <td style="border-right: 1px solid #d8d8d8;">
+                                <a >
+                                    {{item.postCount==1?'Single Post':'MultiPost'}}</a>
+                            </td> -->
+                            <td style="border-right: 1px solid #d8d8d8;"><a (click)="view_request('post',item)"
+                                    style="color: blue;cursor: pointer;">
+                                    {{item.post.length}} </a> /
+                                {{item.max_post_per_stream}}
+                            </td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.streamingDate}} - {{item.streamingTime}}
+                            </td>
+                            <!-- <td style="border-right: 1px solid #d8d8d8;">{{item.sepTwo}}</td> -->
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.adminApprove}}</td>
+
+                            <td style="border-right: 1px solid #d8d8d8;">
+                                <a class="btn btn-danger btn-sm" style="padding: 6px 10px;margin-right: 10px;"
+                                    *ngIf="item.tokenGeneration==false && item.status !='Cancelled' && item.endTime>iso"
+                                    (click)="cancel_stream(item)">Cancel</a>
+                                <span style="color: red;font-weight: bold;"
+                                    *ngIf="item.status =='Cancelled'">Cancelled</span>
+                                <a class="btn btn-primary btn-sm" style="padding: 6px 10px;margin-right: 10px;"
+                                    [routerLink]="['step-one']" [queryParams]="{id:item._id}"
+                                    *ngIf="item.adminApprove=='Pending'&& item.status !='Cancelled' && item.startTime>iso">Edit</a>
+                                <span style="color: orange;font-weight: bold;"
+                                    *ngIf="item.endTime<iso && item.status  !='Cancelled'">Completed</span>
+                                <span style="color: green;font-weight: bold;"
+                                    *ngIf="item.tokenGeneration==false  && item.adminApprove !='Pending'&& item.status !='Cancelled' && item.startTime<iso && item.endTime > iso">Time
+                                    Reached</span>
+                                <span style="color: green;font-weight: bold;"
+                                    *ngIf="item.tokenGeneration==true  && item.adminApprove !='Pending'&& item.status !='Cancelled' && item.startTime<iso && item.endTime > iso">On
+                                    Going</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="totalcount !=null"
+                    style="display: flex; justify-content: right; align-items: center;margin-top: 20px;">
+                    <ul class="pagination justify-content-end pageination">
+                        <li style="font-size: 12px; padding: 8px 11px; font-weight: bold">
+                            {{ totalcount + "/" + pagetotal }}
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="displaycount == 0"
+                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                (click)="pagination(3)">
+                                <i class="fa fa-angle-double-left"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="displaycount == 0"
+                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                (click)="pagination(0)">
+                                <i class="fa fa-angle-left"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button class="btn btn-primary" style="padding: 7px 16px;border-radius: 0;margin: 0 4px;">{{
+                                page + 1
+                                }}</button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="pagetotal - 1 == displaycount"
+                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                class="page-link" (click)="pagination(1)">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button [disabled]="pagetotal - 1 == displaycount"
+                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                class="page-link" (click)="pagination(2)">
+                                <i class="fa fa-angle-double-right"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div class="modal fade" id="no_post_found">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h4 class="modal-title">No Post Found</h4>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    [routerLink]="'/manage-post/create-post'" style="padding: 5px 10px; margin-right: 10px;">Add
+                    Post</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                    style="padding: 5px 10px; margin-right: 10px;">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="view_details">
+    <div class="modal-dialog" ngClass="{{view_details_type =='post'?'modal-xl':''}}">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title" *ngIf="view_details !=null">{{view_details.productName}}</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="close_popup()"></button>
+            </div>
+
+            <div class="modal-body" *ngIf="view_details !=null">
+                <div class="views">
+                    <a (click)="change_view('content')" class="view_options"
+                        ngClass="{{view_details_type=='content'?'active-menu':''}}">Details</a> |
+                    <a (click)="change_view('image')" class="view_options"
+                        ngClass="{{view_details_type=='image'?'active-menu':''}}"
+                        *ngIf="view_details.image !=null">Images</a> |
+                    <a (click)="change_view('video')" class="view_options" *ngIf="view_details.video !=null"
+                        ngClass="{{view_details_type=='video'?'active-menu':''}}">Teaser</a> |
+                    <a (click)="change_view('post')" class="view_options" *ngIf="view_details.video !=null"
+                        ngClass="{{view_details_type=='post'?'active-menu':''}}">Post</a>
+                </div>
+
+                <div class="video-player" *ngIf="view_details_type=='video'">
+                    <video *ngIf="view_details.video !=null" src="{{view_details.teaser}}" controls
+                        style="width: 100%;height: 300px;"></video>
+                </div>
+                <div class="images-multible" *ngIf="view_details_type=='image'">
+                    <div class="row" *ngIf="view_details.image !=null">
+                        <div class="col-12">
+                            <img src="{{baseURL+'/'+view_details.image}}" alt="" style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="images-multible" *ngIf="view_details_type=='content'">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>Stream Name</td>
+                                <td>:</td>
+                                <td>{{view_details.streamName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Post Count</td>
+                                <td>:</td>
+                                <td>{{view_details.post.length}}</td>
+                            </tr>
+                            <tr *ngIf="view_details.bookingAmount_contion =='yes'">
+                                <td>Booking Amount</td>
+                                <td>:</td>
+                                <td>{{view_details.bookingAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td>Primary Communication</td>
+                                <td>:</td>
+                                <td>{{view_details.primarycommunication}}</td>
+                            </tr>
+                            <tr>
+                                <td>Secondary Communication</td>
+                                <td>:</td>
+                                <td>{{view_details.secondarycommunication}}</td>
+                            </tr>
+                            <tr>
+                                <td>Streaming Date</td>
+                                <td>:</td>
+                                <td>{{view_details.streamingDate}}</td>
+                            </tr>
+                            <tr>
+                                <td>Streaming Time</td>
+                                <td>:</td>
+                                <td>{{view_details.streamingTime}}</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>:</td>
+                                <td style="overflow-wrap: anywhere;">{{view_details.discription}}</td>
+                            </tr>
+                            <tr>
+                                <td>After Streaming Show</td>
+                                <td>:</td>
+                                <td style="overflow-wrap: anywhere;">{{view_details.afterStreaming}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="images-multible" *ngIf="view_details_type=='post'">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>S.NO</th>
+                                <th>Product</th>
+                                <th>Location</th>
+                                <th>Quantity</th>
+                                <th>Market Price</th>
+                                <th>Offer Price</th>
+                                <th>Min Lots</th>
+                                <th>Max Lots</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of view_details.streamrequestposts;index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{item.productTitle}}</td>
+                                <td>{{item.location}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.marketPlace}}</td>
+                                <td>{{item.offerPrice}}</td>
+                                <td>{{item.minLots}}</td>
+                                <td>{{item.incrementalLots}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" style="padding: 10px;" data-bs-dismiss="modal"
+                    (click)="close_popup()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

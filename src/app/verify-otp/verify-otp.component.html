@@ -1,0 +1,41 @@
+<section class="">
+    <div class="px-2 mb-5 px-md-5 text-center text-lg-start">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center login-form">
+                <div class="col-lg-7 mb-5 mb-lg-0">
+                </div>
+                <div class="col-lg-5 mb-5 mb-lg-0" style="margin-left: 29%;
+                margin-top: 6%;">
+                    <div class="card">
+                        <div class="card-body py-3 px-md-5">
+                            <h4 style="text-align: center;margin-bottom: 20px;">OTP Verify</h4>
+                            <form [formGroup]="verify" (submit)="verify_now()" #ngForm="ngForm">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example3" >Enter Your OTP</label>
+                                    <input type="email" id="form3Example3" class="form-control" formControlName="OTP"
+                                        (keypress)="keyPress($event,$event)" />
+                                    <label class="form-label error-message"
+                                        *ngIf="submitted && verify.get('OTP')?.invalid || submitted && lengthcheck.length !=6"
+                                        for="form3Example4" style="color: red;">
+                                        Enter Valid OTP number!</label>
+                                    <label class="form-label error-message" *ngIf="error_message !=null"
+                                        for="form3Example4">{{error_message}}</label>
+                                </div>
+                                <div class="form-check  justify-content-center mb-4">
+                                    <button type="button" class="btn btn-secondary btn-block mb-4"
+                                        style="float: left;width: 49%;">
+                                        Resend
+                                    </button>
+                                    <button type="submit" class="btn btn-primary btn-block mb-4"
+                                        style="float: right;width: 49%;">
+                                        Verify
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

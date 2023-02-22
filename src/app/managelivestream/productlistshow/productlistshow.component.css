@@ -1,0 +1,113 @@
+.product-view {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    position: relative;
+}
+
+.single-product {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px #48D391;
+    border-radius: 10px;
+    height: 200px;
+    margin: 9px;
+    position: relative;
+
+}
+
+.single-product img {
+    width: 100%;
+    height: 66%;
+    padding: 10px 20px 5px;
+}
+
+.proudct-list {
+    height: 100%;
+    overflow: hidden;
+    padding: 0 10px;
+    padding-top: 60px;
+}
+
+.proudct-list:hover {
+    overflow: auto;
+}
+
+.product-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 5px 20px 2px;
+    color: black;
+    margin: 0;
+}
+
+.cart-details {
+    padding: 5px 20px 0px;
+    font-size: 13px;
+    color: black;
+}
+
+.start-button {
+    position: absolute;
+    width: 100%;
+    height: 66%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-btn {
+    color: green;
+    font-size: 13px;
+    background: rgb(238 238 238 / 60%);
+    border-radius: 5px;
+    padding: 4px 20px;
+    font-weight: bold;
+}
+
+.end-button {
+    color: red;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    padding: 4px 20px;
+}
+
+.stream-title {
+    position: absolute;
+    z-index: 1000;
+    width: 98%;
+    background: white;
+}
+
+.stream-title p {
+    margin-bottom: 1rem;
+    width: 100%;
+    margin-left: 24px;
+    margin-top: 10px;
+    color: black;
+}
+
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: gray;
+}

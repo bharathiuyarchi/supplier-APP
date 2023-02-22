@@ -1,0 +1,177 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+  <app-header></app-header>
+  <div class="container-fluid">
+    <div class="row" *ngIf="my_plans !=null" style="margin:q">
+      <h5 class="title-menu">My Plans</h5>
+      <div style="display: flex;justify-content:flex-end">
+        <button class="btn btn-primary btn-sm" [routerLink]="['purchase-plans']" style="float: right;">Purchase
+          Plan</button>
+      </div>
+      <div class="col-12">
+
+        <table class="table table-borderless mt-4 table_all_orders" *ngIf="my_plans.length !=0">
+          <thead>
+            <tr style="border: 1px solid #484444;">
+              <th style="border-right: 1px solid gray;">NO.</th>
+              <th style="border-right: 1px solid gray;">Plan Name</th>
+              <th style="border-right: 1px solid gray;">Purchase Date</th>
+              <th style="border-right: 1px solid gray;">NOS/Availabe</th>
+              <th style="border-right: 1px solid gray;">NOP</th>
+              <th style="border-right: 1px solid gray;">Chat</th>
+              <th style="border-right: 1px solid gray;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border: 1px solid #d8d8d8;" *ngFor="let item of my_plans; index as i">
+              <td style="border-right: 1px solid #d8d8d8;">{{i+1+(10*displaycount)}}</td>
+              <td style="border-right: 1px solid #d8d8d8;">
+                <a style="color: blue;cursor: pointer;" (click)="view_image(item)">{{item.planName}}</a>
+              </td>
+              <td style="border-right: 1px solid #d8d8d8;">{{item.created|date:"dd-MM-yyyy"}}
+                {{item.created|date:"hh:mma"}}</td>
+              <td style="border-right: 1px solid #d8d8d8;">{{item.numberofStream}}</td>
+              <td style="border-right: 1px solid #d8d8d8;">{{item.numberOfParticipants}}</td>
+              <td style="border-right: 1px solid #d8d8d8;">{{item.chatNeed}}</td>
+              <td style="border-right: 1px solid #d8d8d8;"><a
+                  ngClass="{{item.expireDate > date_now ?'plan-active':'plan-expire'}}">{{item.expireDate > date_now
+                  ?'Active':'Expired'}}</a>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="totalcount !=null"
+          style="display: flex; justify-content: right; align-items: center;margin-top: 20px;">
+          <ul class="pagination justify-content-end pageination">
+            <li style="font-size: 12px; padding: 8px 11px; font-weight: bold">
+              {{ totalcount + "/" + pagetotal }}
+            </li>
+            <li class="page-item">
+              <button [disabled]="displaycount == 0" ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}"
+                class="page-link" (click)="pagination(3)">
+                <i class="fa fa-angle-double-left"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button [disabled]="displaycount == 0" ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}"
+                class="page-link" (click)="pagination(0)">
+                <i class="fa fa-angle-left"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button class="btn btn-primary" style="padding: 7px 16px;border-radius: 0;margin: 0 4px;">{{ page + 1
+                }}</button>
+            </li>
+            <li class="page-item">
+              <button [disabled]="pagetotal - 1 == displaycount"
+                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}" class="page-link"
+                (click)="pagination(1)">
+                <i class="fa fa-angle-right"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button [disabled]="pagetotal - 1 == displaycount"
+                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}" class="page-link"
+                (click)="pagination(2)">
+                <i class="fa fa-angle-double-right"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p *ngIf="my_plans.length ==0" style="text-align: center;margin-top: 30px;">No Plan Purchase Yet</p>
+
+
+    </div>
+
+  </div>
+</main>
+
+<div class="modal fade" id="view_details">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" *ngIf="view_details !=null">{{view_details.productName}}</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" *ngIf="view_details !=null">
+        <div class="images-multible">
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <td>Plan Name</td>
+                <td>:</td>
+                <td>{{view_details.planName}}</td>
+              </tr>
+              <tr>
+                <td>Plan Validity</td>
+                <td>:</td>
+                <td>{{view_details.validityofplan}} Days</td>
+              </tr>
+              <tr>
+                <td>No Of Participants</td>
+                <td>:</td>
+                <td>{{view_details.noOfParticipants}}</td>
+              </tr>
+              <tr>
+                <td>Chat</td>
+                <td>:</td>
+                <td>{{view_details.chatNeed}}</td>
+              </tr>
+              <tr>
+                <td>Post Per Stream</td>
+                <td>:</td>
+                <td>{{view_details.max_post_per_stream}}</td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td>:</td>
+                <td>{{view_details.Duration}} Minutes </td>
+              </tr>
+              <tr>
+                <td>Number of Stream</td>
+                <td>:</td>
+                <td>{{view_details.numberofStream}}</td>
+              </tr>
+              <tr *ngIf="view_details.commision=='yes'">
+                <td>commition</td>
+                <td>:</td>
+                <td>{{view_details.commition_value}}</td>
+              </tr>
+              <tr>
+                <td>Stream Expire</td>
+                <td>:</td>
+                <td style="overflow-wrap: anywhere;">30 days</td>
+              </tr>
+              <tr>
+                <td>Plan Amount</td>
+                <td>:</td>
+                <td>{{view_details.paidAmount}}</td>
+              </tr>
+              <tr>
+                <td>Puchase Date</td>
+                <td>:</td>
+                <td>{{view_details.created|date:"dd-MM-yyyy"}}
+                  {{view_details.created|date:"hh:mma"}}</td>
+              </tr>
+              <tr>
+                <td>Expiry Date</td>
+                <td>:</td>
+                <td>{{view_details.expireDate|date:"dd-MM-yyyy"}}
+                  {{view_details.expireDate|date:"hh:mma"}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" style="padding: 10px;"
+          data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

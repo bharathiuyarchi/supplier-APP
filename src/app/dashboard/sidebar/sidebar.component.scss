@@ -1,0 +1,103 @@
+@import "../../../assets/scss/variables";
+
+.sidebar {
+    display: block;
+    position: fixed;
+    width: 100%;
+    max-width: 16.063rem;
+    top: 0;
+    bottom: 0;
+    z-index: 910;
+    -webkit-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
+    background-color: $white;
+    border-right: 2px solid #EBEBEB;
+
+    .sidebar-header {
+        a {
+            display: block;
+            padding: 1.125rem 1rem;
+            text-align: center;
+
+            img {
+                max-width: 80%;
+                max-height: 60px;
+            }
+        }
+    }
+
+    .poweredby {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        width: 140px;
+    }
+
+    .sidebar-body ol {
+        overflow: auto;
+        height: 100%;
+    }
+
+    .sidebar-body {
+        max-height: 92vh;
+        padding-top: 15px;
+        overflow: auto;
+
+        .scroll-content {
+            display: flow-root;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+
+            ul {
+                margin: 0;
+                padding: 0;
+
+                li {
+                    list-style: none;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                    transition: all 400ms ease;
+                    position: relative;
+                    margin: 5px 0;
+
+                    a {
+                        display: block;
+                        font-size: 1rem;
+                        display: flex;
+                        white-space: nowrap;
+                        color: #666666;
+                        border-radius: 0.25rem;
+                        padding: 0.735rem 1rem;
+                        transition: all 400ms ease;
+
+                        span {
+                            transition: all 400ms ease;
+                            margin-left: 1rem;
+                            flex: 1;
+                        }
+
+                        i {
+                            font-size: 1.2rem;
+                        }
+
+                        &:hover {
+                            background-color: rgba($primary, 0.1);
+                            color: $primary;
+                        }
+                    }
+
+                    a.active {
+                        background: $primary;
+                        color: $white;
+                        box-shadow: 0 10px 20px -10px rgba($primary, .4);
+                    }
+                }
+            }
+        }
+    }
+
+    ul .feat-show.show {
+        display: block;
+    }
+}

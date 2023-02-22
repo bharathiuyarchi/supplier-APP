@@ -1,0 +1,86 @@
+@import "../../assets/scss/variables";
+
+
+.u_card{
+	margin-bottom: 1.875rem;
+    background-color: #fff;
+    transition: all .5s ease-in-out;
+    position: relative;
+    border: 0 solid transparent;
+    overflow:hidden;
+    border-radius: 0.75rem;
+    box-shadow: 0 0 13px 0 rgb(82 63 105 / 5%);
+    height: calc(100% - 30px);
+
+    .card-header{
+    	background:none;
+    	padding:1.5rem 1.5rem;
+    	border-bottom:1px solid $bordercolor;
+    	h4{
+    		margin:0;
+    		font-weight:600;
+    	}
+
+    	.btn{
+    		padding:10px 20px;
+    		margin:-8px 0;
+    	}
+    }
+
+    .card-body{
+    	padding-top:24px;
+    }
+}
+
+.big-course{
+    h4{
+        font-size:1rem;
+    }
+
+    h1{
+        font-size:2.5rem;
+        font-weight:bold;
+        margin-top:15px;
+    }
+
+    p{
+        font-size:1.2rem;
+        line-height:2rem;
+        margin-bottom:30px;
+    }
+    .big-right-img{
+        max-height:300px;
+        overflow:hidden;
+        border-radius:10px;
+    }
+}
+
+.duelist{
+    margin:0;
+    padding:0;
+    li{
+        list-style:none;
+        position:relative;
+        padding:0px 0 0px 25px;
+        margin:0 15px 30px 15px;
+        &:before{
+            width:5px;
+            height:100%;
+            background:$primary;
+            content:"";
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            border-radius:10px;
+        }
+
+        h4{
+            font-size:1.2rem;
+            font-weight:bold;
+        }
+        &:last-child{
+            margin-bottom:0;
+        }
+    }
+}

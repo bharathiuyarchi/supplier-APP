@@ -1,0 +1,74 @@
+
+<app-sidebar></app-sidebar>
+	<!--  -->
+<router-outlet></router-outlet>
+<main class="main_content">
+	<!-- <app-header></app-header> -->
+
+<div *ngIf="route.children.length === 0" class="container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <h4 style="float: right;font-size: 19px;margin-top: 13px;">Request For Selling</h4>
+      </div>
+
+      <div class="col-lg-6 col-sm-12 col-xs-12 col-md-12 col-xl-6">
+      </div>
+      <!-- <div class="col-lg-6 col-sm-12 col-xs-12 col-md-12 col-xl-6">
+        <div class="order_session" style="margin: 12px 0;margin: 12px 0;">
+          <a style="padding: 2px 6px; margin: 10px 5px 10px 0" class="btn btn-primary"
+            [routerLink]="['procedures']"  [disabled]="">New Request</a>
+  
+        </div>
+      </div> -->
+      <div class="form-check  justify-content-center mb-4">
+        <button type="button" class="btn btn-primary btn-block mb-4"
+            
+              style="padding: 2px 6px; margin: 10px 5px 10px 0"
+        [routerLink]="['procedures']" [disabled]="this.data.approvedStatus == 'Pending'">
+           New Order
+        </button>
+       
+    </div>
+      <div class="table-responsive-sm table_all_orders" style="width: 100%;overflow-x: auto;">
+        <table class="table table-bordered purchese_order_disign">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Product</th>
+              <th scope="col">Confirm Quantity</th>
+              <th scope="col">Confirm Price</th>
+              <th scope="col">Ordered Date</th>
+              <!-- <th scope="col">Exp Date</th> -->
+              <th scope="col">Type</th>
+              <th scope="col">Payment Status</th>
+              <th scope="col">Status</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of orders; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{item.product}}</td>
+              <td>{{item.confirmOrder}}</td>
+              <td>{{item.confirmprice}}</td>
+              <td>{{item.date}}</td>
+              <!-- <td>{{item.exp_date}}</td> -->
+              <td>{{item.order_Type}}</td>
+              <td>{{item.status}}</td>
+              <td>{{item.SuddenStatus}}</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr *ngIf="orders.length == 0">
+                <td colspan="9" style="text-align:center;color: #dc1c1c;">...No Data Found....</td>
+            </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- <app-footer></app-footer> -->
+</main>
+
+<!-- <app-procedures *ngIf="route.children.length != 0" (newItemEvent)="addItem($event)"></app-procedures> -->
+ 

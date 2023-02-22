@@ -1,0 +1,130 @@
+<app-sidebar></app-sidebar>
+
+<!--router-outlet></router-outlet-->
+<main class="main_content profilepage">
+	<app-header></app-header>
+	<div class="container-fluid">
+		<div class="row" style="margin:0px">
+			<div class="col-12">
+				<h1 style="text-align: center;font-size: 25px ; margin-top: 10px;  color: rgb(171, 15, 15); ">My
+					Account</h1>
+			</div>
+
+		</div>
+
+
+		<div class="container" >
+			<div class="tab-content" style="margin: 0; padding: 0px;">
+				<div #page1 id="menu0" class="container tab-pane active"><br>
+					<div class="col-12">
+						<div class="form_controller">
+
+							<form [formGroup]="supplier" (submit)="supplier_create()">
+								<div class="row">
+
+
+
+
+									
+									<div class="form_singlerow">
+										<label for="Registered Address">Registered Address</label>
+										<input type="text" formControlName="RegisteredAddress">
+									</div>
+									<div class="row align-items-start">
+										<span style="color: red;text-align:center;  margin-left: 60px;
+															padding-bottom: 15px;" *ngIf="prolist_sup && supplier.get('RegisteredAddress')?.invalid">Enter
+											RegisteredAddress</span>
+									</div>
+
+                        <div class="form_singlerow" >
+                            <label for="secondaryContactName">Secondary Contact Name</label>
+                            <input type="text" formControlName="secondaryContactName">
+                        </div>
+                        <div class="row align-items-start">
+                            <span style="color: red;text-align:center; margin-left: 40px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && supplier.get('secondaryContactName')?.invalid">Enter Contact Name</span>
+                          </div>
+                     
+                        <div class="form_singlerow">
+                            <label for="secondaryContactNumber">Secondary Contact No</label>
+                            <input type="text" formControlName="secondaryContactNumber"
+                                (keypress)=" keyPressNumbers($event)" maxlength="10"  pattern="[6789][0-9]{9}"  (keypress)="valid($event)">
+                        </div>
+                        <div class="row align-items-start">
+                            <span style="color: red;text-align:center; margin-left: 40px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && supplier.get('secondaryContactNumber')?.invalid">Enter Contact Number</span>
+                          </div>
+									
+									<div class="form_singlerow">
+										<label for="countries">Country</label>
+										<select (change)="selectstate($event)" formControlName="countries">
+
+											<option [ngValue]="null" disabled selected>Select Country</option>
+											<option value={{data.isoCode}} *ngFor="let data of countries">{{data.name}}
+											</option>
+										</select>
+
+									</div>
+									<div class="row align-items-start">
+										<span style="color: red;text-align:center; margin-left: 30px;
+															padding-bottom: 15px;" *ngIf="prolist_sup && supplier.get('countries')?.invalid">Select Country</span>
+									</div>
+									
+									<div class="form_singlerow">
+										<label for="State">State</label>
+										<select formControlName="state" (change)="selectcity($event)">
+
+											<option [ngValue]="null" disabled selected>Select State</option>
+											<option value={{data.isoCode}} *ngFor="let data of state">{{data.name}}
+											</option>
+										</select>
+									</div>
+									<div class="row align-items-start">
+										<span style="color: red;text-align:center; margin-left: 30px;
+															padding-bottom: 15px;" *ngIf="prolist_sup && supplier.get('state')?.invalid">Select State</span>
+									</div>
+									
+									<div class="form_singlerow">
+										<label for="District">City</label>
+										<select formControlName="district">
+
+											<option [ngValue]="null" disabled selected>Select City</option>
+											<option value={{data.name}} *ngFor="let data of city">{{data.name}}</option>
+										</select>
+									</div>
+									<div class="row align-items-start">
+										<span style="color: red;text-align:center; margin-left: 30px;
+															padding-bottom: 15px;" *ngIf="prolist_sup && supplier.get('district')?.invalid">Select District</span>
+									</div>
+									
+									<div class="form_singlerow">
+										<label for="Pincode">Pincode</label>
+										<input type="text" formControlName="pinCode"
+											onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+											pattern="^[1-8][0-9]{5}$" maxlength="6">
+									</div>
+									<div class="row align-items-start">
+										<span style="color: red;text-align:center; margin-left: 30px;
+															padding-bottom: 15px;" *ngIf="prolist_sup && supplier.get('pinCode')?.invalid">Select pinCode</span>
+									</div>
+
+
+									<button
+										style="padding: 0px 6px; margin-left: 41%; width: 110px; background: #084298;"
+										class="btn btn-primary" type="submit">submit</button>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+</div>
+
+
+	</main>

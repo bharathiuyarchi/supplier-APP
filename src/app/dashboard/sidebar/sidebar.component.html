@@ -1,0 +1,49 @@
+<aside class="sidebar">
+	<div class="sidebar_logo sidebar-header d-flex align-items-center justify-content-center">
+		<!-- <a href="login"><img src="assets/images/logo_new.png" height="50" alt="" class="img-fluid"></a> -->
+	</div>
+
+	<div class="sidebar-body">
+		<div class="scroll-content">
+			<ul>
+				<li>
+
+					<a  class="feat-btn"><b style="color: red;">My Account</b><span class="fas fa-caret-down"></span></a>
+
+					<ul class="feat-show">
+						<li><a routerLink="/profile" routerLinkActive="active" style="    margin-left: 30px;"><i class="las la-certificate"></i><span>Basic Details</span></a></li>
+						<li><a routerLink="/DisplayAdvanceDetails" routerLinkActive="active" style="    margin-left: 30px;"><i class="las la-chart-bar"></i> <span>Advance Details</span></a></li>
+					</ul>
+				</li>
+
+				<li><a routerLink="/policies" routerLinkActive="active"><i class="las la-file-alt"></i> <span>Raised Order Request</span></a></li>
+				<li><a routerLink="/ViewReqForSellin" routerLinkActive="active"><i class="las la-book"></i> <span>Request For Selling</span></a></li>
+				<li>
+
+					<a  class="feat-btn"><b style="color: red;">My Bill Payments</b><span class="fas fa-caret-down"></span></a>
+
+					<ul class="feat-show">
+						<li><a routerLink="/certificates" routerLinkActive="active" style="    margin-left: 30px;"><i class="las la-certificate"></i><span>Billed</span></a></li>
+						<li><a routerLink="/reports" routerLinkActive="active" style="    margin-left: 30px;"><i class="las la-chart-bar"></i> <span>Unbilled</span></a></li>
+					</ul>
+				</li>
+				<li><a routerLink="/my-plans" routerLinkActive="active"><i class="las la-file-alt"></i> <span>My Plans</span></a></li>
+				<li><a routerLink="/manage-post" routerLinkActive="active"><i class="las la-file-alt"></i> <span>My Post</span></a></li>
+				<li><a routerLink="/streamrequest" routerLinkActive="active"><i class="las la-file-alt"></i> <span>Request Stream</span></a></li>
+				<li><a routerLink="/livestream" routerLinkActive="active"><i class="las la-file-alt"></i> <span>Streams</span></a></li>
+
+
+        <li><a routerLink="/manage-subuser" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="las la-file-alt"></i> <span>Create sub user</span></a></li>
+			</ul>
+		</div>
+		<div class="poweredby"><a href="" target="_blank"><img src="" alt="" class="img-fluid"></a></div>
+	</div>
+
+     <script>
+		$('.feat-btn').click(function(){
+			$('ul .feat-show').toggleClass("show");
+		})
+	 </script>
+
+
+</aside>

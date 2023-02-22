@@ -1,0 +1,257 @@
+<section class="login_page">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6 col-lg-6 col-xl-5 vh-100 left_login">
+				<!-- <div class="top_logo"><img src="assets/images/wayer.jpg" alt="" class="img-fluid" width="250"></div> -->
+				<div class="login_box">
+					<h1 class="mb-3">Login</h1>
+					<p>Welcome.... Please put your login credentials below to start.</p>
+
+					<form class="mt-5"  [formGroup]="loginForm" >
+						<!-- <p class="form-label error-message" *ngIf="isDisplay"
+						for="form3Example4" style="color: red;">Phone Number Not Registered (or) User Disable</p> -->
+
+						<p
+						class="form-label error-message"
+						*ngIf="passworderror"
+						for="form3Example4"
+						style="color: red  ;  margin-left: 67px;"
+					  >
+					  Passwoed Doesn't Match
+					  </p>
+					  <p
+						class="form-label error-message"
+						*ngIf="notregister"
+						for="form3Example4"
+						style="color: red"
+					  >
+					  Phone Number Not Registered (or) User Disable
+					  </p>
+						<!-- mobile number -->
+						<!-- <div class="form-floating mb-3">
+						  <input type="text" class="form-control" formControlName="primaryContactNumber" id="floatingInput" placeholder="name@example.com">
+						  <label for="floatingInput">Enter Mob Number</label>
+						</div>
+						<div  class="row align-items-start">
+                            <span style="color: red;text-align:center;     margin-left: 20%;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && loginForm.get('primaryContactNumber')?.getError">Phone Number Not Registered</span>
+                          </div> -->
+
+						  <div class="form-outline mb-4">
+							<label class="form-label" for="form3Example3">Mobile Number</label>
+							<input type="text" id="form3Example3" class="form-control"
+								(keypress)="keyPress($event,$event)" formControlName="primaryContactNumber" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57 "
+								pattern="[6789][0-9]{9}" 
+								 maxlength="10" />
+							<label class="form-label error-message"
+								*ngIf="prolist_sup && loginForm.get('primaryContactNumber')?.invalid  "
+								for="form3Example4" style="color: red;">Valid
+								Mobile number!</label>
+						</div>
+
+						<!-- password -->
+						<!-- <div class="form-floating">
+						  <input type="password" class="form-control"  formControlName="password" id="floatingPassword" placeholder="Password">
+						  <label for="floatingPassword">Password</label>
+						  
+						<div class="row align-items-start">
+                            <span style="color: red;text-align:center; margin-left: 10px;
+                            padding-bottom: 15px;"
+                              *ngIf="prolist_sup && loginForm.get('password')?.invalid">Enter valid Password</span>
+                          </div>
+						</div> -->
+
+						<div class="form-outline mb-4">
+							<label class="form-label" for="form3Example4">Password</label>
+
+							<div class="password-field">
+								<input type="password" id="form3Example4" class="form-control"
+									formControlName="password" #show_now />
+								<i class="fa fa-eye show_now" (click)="show_password(show_now,$event )"></i>
+							</div>
+							<label class="form-label error-message" for="form3Example4" style="color: red;"
+								*ngIf="prolist_sup && loginForm.get('password')?.invalid">Enter Password</label>
+							<label class="form-label error-message" *ngIf="error_message !=null"
+								for="form3Example4" >{{error_message}}</label>
+						</div>
+						
+
+						<div class="form-row d-flex justify-content-between mt-4 mb-2">
+							<div class="form-group">
+								<div class="custom-control custom-checkbox ml-1">
+									<input type="checkbox" id="basic_checkbox_1" class="custom-control-input">
+									<label for="basic_checkbox_1" class="custom-control-label">Remember my preference</label>
+								</div>
+							</div>
+							
+							<div class="form-group"><a href="javasctipt:void(0);" routerLink="/Forgotpassword">Forgot Password?</a>
+							</div>
+							<div class="form-group"><a href="javasctipt:void(0);" routerLink="/AlreadyCustomer">Already customer?</a>
+							</div>
+						</div>
+						<button class="btn btn-secondary mt-4" (click) = "btnClicklogin()"  style="width: 30%;">Login</button>
+						<button class="btn btn-secondary mt-4" (click) = "btnClick()" routerLink="/register" style="width: 30%; margin-left: 30%;">Register</button>
+						
+					</form>
+				</div>
+
+			</div>
+			<!-- <div class="col-sm-6 col-lg-6 col-xl-7  vh-100 p-0 right_img">
+				<img src="assets/images/login_image.png" alt="Login Image" style="margin-top:10%;">
+			</div> -->
+		</div>
+	</div>
+</section>
+
+
+<!-- Modal -->
+ <form  [formGroup]="forgotPasswordForm">  
+<div class="modal fade forgopassword" id="forgopassword" tabindex="-1" aria-labelledby="forgopasswordLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+      	 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         <h2 class="modal-title" id="forgopasswordLabel">Forgot Password</h2>
+         <p>Enter your Mobile Number and we'll send you an OTP .</p>
+         <div class="form-floating mb-3">
+			  <input type="email" class="form-control" id="forgotemail" formControlName="primaryContactNumber" placeholder="mob number"
+			  onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+			  pattern="[6789][0-9]{9}" maxlength="10">
+			  <label for="floatingPassword">Mobile Number</label>
+			</div>
+			<label class="form-label error-message"
+			*ngIf="prolist_sup && forgotPasswordForm.get('primaryContactNumber')?.invalid  "
+			for="form3Example4" style="color: red;">Enter Valid
+			Mobile!</label>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resetpassword"  (click)="forgotPass()">Send OTP</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+<form  [formGroup]="verify" >
+<div class="modal fade forgopassword" id="resetpassword" tabindex="-1" aria-labelledby="resetpasswordLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+      	 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         <h2 class="modal-title" id="resetpasswordLabel">Enter OTP</h2>
+         <p>Enter your OTP  to reset your Password.</p>
+         <div class="form-floating mb-3">
+			  <input type="text" class="form-control" id="newpass" placeholder="OTP" formControlName="OTP">
+			  <label for="newpass">Enter OTP</label>
+			</div>
+
+          <button type="button" (click)="verify_now()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#successreset">Verify</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+<div class="modal fade forgopassword" id="resetpassword" tabindex="-1" aria-labelledby="resetpasswordLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-body">
+			 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		   <h2 class="modal-title" id="resetpasswordLabel">Set Your Password</h2>
+		   <p>Set Your Password</p>
+		   <div class="form-floating mb-3">
+				<input type="password" class="form-control" id="newpass" placeholder="OTP" formControlName="password">
+				<label for="newpass">Password</label>
+			  </div>
+  
+			  <div class="form-floating mb-3">
+				<input type="password" class="form-control" id="confirmpass"  placeholder="confirmpassword">
+				<label for="confirmpass">Confirm Password</label>
+			  </div>
+			<button type="button" (click)="passwordfor()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#successreset">Save changes</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+
+  <!-- already Customer -->
+
+  <form  [formGroup]="alreadyCustomersendMobile" >  
+	<div class="modal fade forgopassword" id="alreadyCustomer" tabindex="-1" aria-labelledby="forgopasswordLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+		  <div class="modal-body">
+			   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			 <h2 class="modal-title" id="forgopasswordLabel">Already Customer!!!!</h2>
+			 <p>Enter your Mobile Number and we'll send you an OTP .</p>
+			 <div class="form-floating mb-3">
+				  <input type="email" class="form-control" id="forgotemail" formControlName="mobileNumber" 
+				  placeholder="mob number" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+				  pattern="[6789][0-9]{9}" maxlength="10">
+				  <label for="floatingPassword">Mobile Number</label>
+				</div>
+				<label class="form-label error-message" for="form3Example4" style="color: red;"
+								*ngIf="prolist_sup && loginForm.get('mobileNumber')?.invalid ">Enter Mobile</label>
+							
+			  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customerVerify" (click)="customerVerify()">Send OTP</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<form  [formGroup]="AlreadyCustomerverify" >
+		<div class="modal fade forgopassword" id="customerVerify" tabindex="-1" aria-labelledby="resetpasswordLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+			  <div class="modal-body">
+				   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				 <h2 class="modal-title" id="resetpasswordLabel">Enter OTP</h2>
+				 <p>Enter your OTP  to reset your Password.</p>
+				 <div class="form-floating mb-3">
+					  <input type="password" class="form-control" id="newpass" placeholder="OTP" formControlName="OTP">
+					  <label for="newpass">Enter OTP</label>
+					</div>
+		
+				  <button type="button" (click)="Already_Customer_verify_now()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resetPasswordAlready">Save changes</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		</form>
+
+		<div class="modal fade forgopassword" id="resetPasswordAlready" tabindex="-1" aria-labelledby="resetpasswordLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+			  <div class="modal-content">
+				<div class="modal-body">
+					 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				   <h2 class="modal-title" id="resetpasswordLabel">Set Your Password</h2>
+				   <p>Set Your Password</p>
+				   <div class="form-floating mb-3">
+						<input type="password" class="form-control" id="newpass" placeholder="OTP" formControlName="password">
+						<label for="newpass">Password</label>
+					  </div>
+		  
+					  <div class="form-floating mb-3">
+						<input type="password" class="form-control" id="confirmpass"  placeholder="confirmpassword">
+						<label for="confirmpass">Confirm Password</label>
+					  </div>
+					<button type="button" (click)="resetPasswordAlready()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#successreset">Save changes</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+<!-- <div class="modal fade " id="successreset" tabindex="-1" aria-labelledby="successresetLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+      		<img src="assets/images/success.png" width="100" alt="" class="mb-4">
+         <h2 class="modal-title" id="successresetLabel">Successfully Password Reset</h2>
+         <p>Yoou can use your new password to log in to your account</p>
+          <button type="button"  class="btn btn-secondary mt-3"  data-bs-dismiss="modal" aria-label="Close">Login</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+ <!-- </form>  -->

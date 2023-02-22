@@ -1,0 +1,62 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col-3" *ngFor="let item of plans; index as i">
+                <div class="card" style="max-width: 90%;margin: auto;">
+                    <div class="card-body" style="padding: 30px;">
+                        <div class="price-details">
+                            <h6 style="font-size: 20px;font-weight: bold;padding: 0;margin: 0;">{{item.planName}}
+                            </h6>
+                            <h3 style=" margin-top: 10px;"><span
+                                    style="font-size: 20px; font-size: 21px; color: #46a8d8;font-weight: bold;"><i
+                                        class="fa fa-rupee"></i>{{item.salesPrice}}
+                                </span> <span
+                                    style="text-decoration: line-through;font-size: 13px;">{{item.regularPrice}}</span>
+                            </h3>
+                        </div>
+                        <div class="list-boxes">
+                            <ol>
+
+                                <li>
+                                    <i class="fa fa-check-circle-o available" *ngIf="item.numberofStream !=1"></i>
+                                    <i class="fa fa-close notavailable" *ngIf="item.numberofStream ==1"></i>
+                                    <span> Multi Stream</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-check-circle-o available" *ngIf="item.numberOfParticipants !=1"></i>
+                                    <i class="fa fa-close notavailable" *ngIf="item.numberOfParticipants ==1"></i>
+                                    <span> Multi Participants</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-check-circle-o available" *ngIf="item.chatNeed =='yes'"></i>
+                                    <i class="fa fa-close notavailable" *ngIf="item.chatNeed =='no'"></i>
+                                    <span> Chat</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-check-circle-o available" *ngIf="item.commision !='no'"></i>
+                                    <i class="fa fa-close notavailable" *ngIf="item.commision =='no'"></i>
+                                    <span> Commision</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-check-circle-o available" *ngIf="item.no_of_host !=1"></i>
+                                    <i class="fa fa-close notavailable" *ngIf="item.no_of_host ==1"></i>
+                                    <span> Multi Host</span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="view-plan mt-4">
+                            <button class="btn btn-outline-primary"
+                                style="width: 100%; margin-bottom: 20px; border: 1.5px solid #0e6ffd; padding: 8px;"
+                                [routerLink]="['view-plan']" [queryParams]="{id:item._id,stream:id}">Choose
+                                Plan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>

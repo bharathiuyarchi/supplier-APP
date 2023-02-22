@@ -1,0 +1,62 @@
+<app-sidebar></app-sidebar>
+<main class="main_content">
+    <app-header></app-header>
+
+    <div class="container">
+        <div class="row mt-3" *ngIf="orderDetails !=null">
+            <div class="col-12">
+                <div class="card-box">
+                    <div class="card">
+                        <div class="card-header">
+                        </div>
+                        <div class="card-body">
+                            <h4 style="text-align: center;color: green;">Payment Successfull!</h4>
+
+                            <div class="icons-sucess mt-2">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <table class="table table-borderless mt-3" style="max-width: 500px; margin: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td>Payment Type</td>
+                                        <td style="    text-align: right;">{{orderDetails.payment.method}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bank</td>
+                                        <td style="    text-align: right;">{{orderDetails.payment.bank}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile</td>
+                                        <td style="    text-align: right;">{{orderDetails.payment.contact}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td style="    text-align: right;">{{orderDetails.payment.email}}</td>
+                                    </tr>
+                                    <tr class="mt-3">
+                                        <td style="font-weight: bold;">Amount Paid</td>
+                                        <td style="text-align: right;font-weight: bold;"><i class="fa fa-rupee"></i>
+                                            {{orderDetails.payment.amount/100}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transaction ID</td>
+                                        <td style="    text-align: right;">
+                                            {{orderDetails.payment.acquirer_data.bank_transaction_id}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="display: flex; justify-content:space-between">
+                                <a [routerLink]="['/my-plans']">View My Plans</a>
+                                <a [routerLink]="['/my-plans/purchase-plans']">Continue To Purchase</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</main>
