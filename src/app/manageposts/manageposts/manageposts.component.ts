@@ -23,7 +23,8 @@ export class ManagepostsComponent implements OnInit {
   }
   my_posts: any;
   get_all_posts(page: any) {
-    this.api.get_all_post(page).subscribe((res: any) => {
+    this.filterForm.get('page').setValue(this.page)
+    this.api.get_all_post(this.filterForm.value).subscribe((res: any) => {
       console.log(res)
       this.my_posts = res.value;
       this.displaycount = this.page;
@@ -34,6 +35,11 @@ export class ManagepostsComponent implements OnInit {
 
   delete_post(id: any) {
     this.api.delete_one_post(id).subscribe((res: any) => {
+      this.get_all_posts(this.filterForm.value);
+    });
+  }
+  remove_post({ _id }: any) {
+    this.api.removed_one_post(_id).subscribe((res: any) => {
       this.get_all_posts(this.filterForm.value);
     });
   }
@@ -56,14 +62,14 @@ export class ManagepostsComponent implements OnInit {
 
   filterForm: any = new FormGroup({
     date: new FormControl(null),
-    status: new FormControl('active'),
+    status: new FormControl('Active'),
     page: new FormControl(0),
   })
   filterDate = new FormControl(null)
   apply_filter() {
     console.log(this.filterDate.value, 12312312)
     if (this.filterDate?.value != null) {
-      let endDate = formatDate(new Date(this.filterDate?.value['end']['$d']), 'yyy-MM-dd', 'en-IN');
+      let endDate = formatDate(new Date().setDate(new Date(this.filterDate?.value['end']['$d']).getDate() - 1), 'yyy-MM-dd', 'en-IN');
       let startDate = formatDate(new Date(this.filterDate?.value['start']['$d']), 'yyyy-MM-dd', 'en-IN');
       console.log(endDate)
       console.log(startDate)

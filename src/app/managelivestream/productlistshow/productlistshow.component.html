@@ -5,12 +5,13 @@
     <div class="proudct-list">
 
         <div class="row" style="margin:0;">
-            <div style="padding:0;" class="col-6" *ngFor="let item of streamDetails.streamrequestposts; index as i">
+            <div style="padding:0;" class="col-6" *ngFor="let item of streamProduct; index as i">
                 <div class="single-product">
                     <img src="{{baseURL+'/'+item.productImage}}" alt="">
                     <div class="start-button">
                         <button class="btn start-btn" (click)="start_post(item)"
-                            *ngIf="item.streamStart==null &&primaryHost &&  streamDetails.streamrequestposts.length !=1" [disabled]="streamPending">
+                            *ngIf="item.streamStart==null &&primaryHost &&  streamProduct !=1"
+                            [disabled]="streamPending">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -23,7 +24,7 @@
 
                             Start</button>
                         <button class="btn end-button"
-                            *ngIf="item.streamStart !=null && item.streamEnd==null && primaryHost  && streamDetails.streamrequestposts.length !=1"
+                            *ngIf="item.streamStart !=null && item.streamEnd==null && primaryHost  && streamProduct.length !=1"
                             (click)="end_post(item)">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +36,8 @@
 
                             End</button>
                         <button class="btn end-button" style="color: white;font-weight: bold;background: black;"
-                            *ngIf="item.streamStart !=null && item.streamEnd!=null  && streamDetails.streamrequestposts.length !=1" (click)="end_post(item)">
+                            *ngIf="item.streamStart !=null && item.streamEnd!=null  && streamProduct.length !=1"
+                            (click)="end_post(item)">
                             Completed</button>
                     </div>
                     <p class="product-title"><span>{{item.productTitle}}</span> <span

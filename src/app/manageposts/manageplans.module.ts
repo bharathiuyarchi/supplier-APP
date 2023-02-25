@@ -50,6 +50,10 @@ export class managepostsservice {
   delete_one_post(id: any) {
     return this.http.delete(this.baseurl + "/v1/ecomplan/delete/one/post?id=" + id, { headers: { auth: this.token }, });
   }
+
+  removed_one_post(id: any) {
+    return this.http.put(this.baseurl + "/v1/ecomplan/remove/one/post?id=" + id,{}, { headers: { auth: this.token }, });
+  }
   create_post_image(date: any) {
     return this.http.post(this.baseurl + "/v1/ecomplan/create/post", date, { headers: { auth: this.token }, });
   }

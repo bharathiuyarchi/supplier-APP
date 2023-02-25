@@ -84,18 +84,10 @@ export class ManagelivestreamComponent implements OnInit, OnDestroy {
       type: "host",
       streamId: item._id
     }
-    console.log(item)
-    if (!item.tokenGeneration) {
-      this.api.create_token(data).subscribe((res: any) => {
-        console.log(res)
-        this.router.navigateByUrl('livestream/golive?id=' + item._id)
-      })
-
-    }
-    else {
-      this.router.navigateByUrl('livestream/golive?id=' + item._id)
-    }
-
+    this.api.create_token(data).subscribe((res: any) => {
+      console.log(res)
+      this.router.navigateByUrl('livestream/golive?id=' + item._id);
+    })
   }
 
 

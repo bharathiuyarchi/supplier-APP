@@ -56,24 +56,28 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
     // this.stream.pause_button();
   }
   get_token(id: any) {
-    this.api.get_token_details(id).subscribe((res: any) => {
-      console.log(res, 1237816231)
-      if (res.length != 0) {
-        this.targetTime = res[0].endTime;
-        this.streamDetails = res[0]
-        // this.targetDate = new Date(2023, 5, 11);
-        // this.targetTime = this.targetDate.getTime();
-        this.tickTock();
-        res = res[0].temptokens;
-        this.start_call_now(res, res.chennel);
-        this.userId = res.Uid;
-        this.token = res;
-        console.log(this.token, 2131231)
-        this.web.mainhost_remove_live(this.id, this.userId).subscribe(msg => {
-          console.log(msg)
-          this.leave_host();
-        });
+    this.api.create_cloude_recording({ streamId: id }).subscribe((res: any) => {
+      this.token = res;
+      if (res.recoredStart == "Pending") {
+        this.start_recording();
       }
+    })
+    this.api.get_token_details(id).subscribe((res: any) => {
+      console.log(res)
+      this.targetTime = res.endTime;
+      this.streamDetails = res
+      // this.targetDate = new Date(2023, 5, 11);
+      // this.targetTime = this.targetDate.getTime();
+      this.tickTock();
+      res = res.temptokens;
+      this.start_call_now(res, res.chennel);
+      this.userId = res.Uid;
+      console.log(this.token, 2131231)
+      this.web.mainhost_remove_live(this.id, this.userId).subscribe(msg => {
+        console.log(msg)
+        this.leave_host();
+      });
+
     })
   }
   get_user_participents(id: any) {
@@ -81,23 +85,10 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
       this.participents = res
     })
   }
-
-  // get_token_details() {
-  //   this.api.get_token_details_host(this.id).subscribe((res: any) => {
-  //     console.log(res);
-  //     this.expiered_message(res)
-  //     if (!this.expiered) {
-  //       this.start_call_now(res, res.chennel);
-  //       this.userId = res.Uid;
-  //     }
-  //   });
-  // }
-
   async start_call_now(res: any, channel: any) {
     this.stream.agoraServerEvents(this.stream.rtc);
     await this.stream.localUser(res.token, res.Uid, '', channel);
     this.toggle_controls();
-    // this.start_recording();
   }
 
   async leave_host() {
@@ -171,8 +162,8 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
     })
   }
   stop_recording() {
-    if (this.recording_api != null) {
-      this.agora.stop_recording({ resourceId: this.recording_api.resourceId, sid: this.recording_api.sid, id: this.token._id }).subscribe((res: any) => {
+    if (this.stream.remoteUsers.length == 0) {
+      this.agora.stop_recording({ id: this.token._id }).subscribe((res: any) => {
         this.recording_api = res
       })
     }

@@ -41,22 +41,86 @@
                                     [queryParams]="{id:item._id}">+</a>
                             </td>
                             <td>
-                                <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions "
-                                    class="btn btn-success btn-sm" style="padding: 6px 8px;" (click)="go_live(item)">Go
-                                    Live</a>
-                                <span
-                                    *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
-                                    style="color:rgb(173, 31, 168);font-weight:bold">On
-                                    Going</span>
-                                <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
-                                    style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
-                                <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
-                                    style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
-                                <span *ngIf="item.status =='Cancelled' "
-                                    style="color:red;font-weight:bold">Cancelled</span>
-                                <span
-                                    *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
-                                    style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                                <ng-container *ngIf="item.no_of_host == 1">
+                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.allot_host_1 !='subhost'"
+                                        class="btn btn-success btn-sm" style="padding: 6px 8px;"
+                                        (click)="go_live(item)">Go
+                                        Live</a>
+
+                                    <a *ngIf="item.allot_chat =='subhost' ||  item.allot_host_1 =='subhost'"
+                                        style="font-weight: bold;padding: 6px 10px;" class="btn btn-primary"
+                                        routerLink="/manage-subuser/manageallot/allot"
+                                        [queryParams]="{id:item._id}">Assign Host</a>
+                                    <div *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !='subhost'">
+                                        <span
+                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
+                                            style="color:rgb(173, 31, 168);font-weight:bold">On
+                                            Going</span>
+                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
+                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
+                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
+                                        <span *ngIf="item.status =='Cancelled' "
+                                            style="color:red;font-weight:bold">Cancelled</span>
+                                        <span
+                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.no_of_host == 2">
+                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null"
+                                        class="btn btn-success btn-sm" style="padding: 6px 8px;"
+                                        (click)="go_live(item)">Go
+                                        Live</a>
+
+                                    <a *ngIf="item.allot_chat =='subhost' ||  item.allot_host_1 ==null || item.allot_host_2 ==null"
+                                        style="font-weight: bold;padding: 6px 10px;" class="btn btn-primary"
+                                        routerLink="/manage-subuser/manageallot/allot"
+                                        [queryParams]="{id:item._id}">Assign Host</a>
+                                    <div
+                                        *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null">
+                                        <span
+                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
+                                            style="color:rgb(173, 31, 168);font-weight:bold">On
+                                            Going</span>
+                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
+                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
+                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
+                                        <span *ngIf="item.status =='Cancelled' "
+                                            style="color:red;font-weight:bold">Cancelled</span>
+                                        <span
+                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.no_of_host == 3">
+                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null&& item.allot_host_3 !=null"
+                                        class="btn btn-success btn-sm" style="padding: 6px 8px;"
+                                        (click)="go_live(item)">Go
+                                        Live</a>
+
+                                    <a *ngIf="item.allot_chat =='subhost' ||  item.allot_host_1 ==null || item.allot_host_2 ==null|| item.allot_host_3 ==null"
+                                        style="font-weight: bold;padding: 6px 10px;" class="btn btn-primary"
+                                        routerLink="/manage-subuser/manageallot/allot"
+                                        [queryParams]="{id:item._id}">Assign Host</a>
+                                    <div
+                                        *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null &&  item.allot_host_3 !=null">
+                                        <span
+                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
+                                            style="color:rgb(173, 31, 168);font-weight:bold">On
+                                            Going</span>
+                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
+                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
+                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
+                                        <span *ngIf="item.status =='Cancelled' "
+                                            style="color:red;font-weight:bold">Cancelled</span>
+                                        <span
+                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                                    </div>
+                                </ng-container>
                             </td>
                         </tr>
 
@@ -129,7 +193,8 @@
                             <th>OfferPrice</th>
                             <th>MinLots</th>
                             <th>IncrementalLots</th>
-                            <th>Action</th>
+                            <th>After Live Stream Price</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -140,8 +205,9 @@
                             <td>{{items.offerPrice}}</td>
                             <td>{{items.minLots}}</td>
                             <td>{{items.incrementalLots}}</td>
-                            <td><button class="btn btn-danger"
-                                    style="padding: 5px 10px;font-size: 12px;">Remove</button></td>
+                            <td>{{items.postLiveStreamingPirce}}</td>
+                            <!-- <td><button class="btn btn-danger"
+                                    style="padding: 5px 10px;font-size: 12px;">Remove</button></td> -->
                         </tr>
                     </tbody>
                 </table>

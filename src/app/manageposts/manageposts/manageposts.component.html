@@ -47,9 +47,11 @@
                             <th style="border-right: 1px solid gray;">Market Price</th>
                             <th style="border-right: 1px solid gray;">offerPrice</th>
                             <th style="border-right: 1px solid gray;">Stream Name</th>
-                            <th style="border-right: 1px solid gray;">Stream Duration</th>
+                            <th style="border-right: 1px solid gray;">Start End Video</th>
                             <th style="border-right: 1px solid gray;">Status</th>
-                            <th style="border-right: 1px solid gray;">Action</th>
+                            <th style="border-right: 1px solid gray;"
+                                *ngIf="filterForm.get('status')?.value !='removed' && filterForm.get('status')?.value !='Cancelled'  && filterForm.get('status')?.value !='exhausted'&& filterForm.get('status')?.value !='live'">
+                                Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,14 +65,32 @@
                             <td style="border-right: 1px solid #d8d8d8;">{{item.marketPlace}}</td>
 
                             <td style="border-right: 1px solid #d8d8d8;">{{item.offerPrice}}</td>
-                            <td style="border-right: 1px solid #d8d8d8;">-</td>
-                            <td style="border-right: 1px solid #d8d8d8;">-</td>
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.status}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.streamName==null?"-":item.streamName}}
+                            </td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.streamStart|date :"hh:mm a"}} -
+                                {{+item.streamEnd|date :"hh:mm a"}}
+                            </td>
                             <td style="border-right: 1px solid #d8d8d8;">
+                                <span
+                                    *ngIf="filterForm.get('status')?.value =='Active' || filterForm.get('status')?.value =='assigned' || filterForm.get('status')?.value =='Cancelled'  ||filterForm.get('status')?.value =='removed'  ">{{item.status}}
+                                </span>
+                                <span *ngIf="filterForm.get('status')?.value =='live'">Assigned Live
+                                </span>
+                                <span *ngIf="filterForm.get('status')?.value =='completed'">Assigned Completed
+                                </span>
+                            </td>
+                            <td style="border-right: 1px solid #d8d8d8;"
+                                *ngIf="filterForm.get('status')?.value !='removed' && filterForm.get('status')?.value !='Cancelled'  && filterForm.get('status')?.value !='exhausted' && filterForm.get('status')?.value !='live'">
                                 <button type="button" class="btn btn-danger btn-sm"
-                                    style="padding: 5px 10px; margin-right: 10px;"
-                                    (click)="delete_post(item._id)">Delete</button>
-                                <a [routerLink]="['create-post']" [queryParams]="{id:item._id}">Edit</a>
+                                    style="padding: 5px 10px; margin-right: 10px;" (click)="delete_post(item._id)"
+                                    *ngIf="item.status=='Active'"><i class="fa fa-trash"
+                                        aria-hidden="true"></i></button>
+                                <a *ngIf="item.status=='Active' ||item.status=='Assigned'" class="btn btn-primary"
+                                    style="padding: 5px 10px; margin-right: 10px;" [routerLink]="['create-post']"
+                                    [queryParams]="{id:item._id}"><i class="fa fa-edit"></i></a>
+                                <a *ngIf="item.status=='Completed'" class="btn btn-danger"
+                                    style="padding: 5px 10px; margin-right: 10px;"><i class="fa fa-remove"
+                                        (click)="remove_post(item)"></i></a>
                             </td>
                         </tr>
                     </tbody>

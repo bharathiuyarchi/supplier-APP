@@ -14,7 +14,7 @@ export class ProductlistshowComponent implements OnInit {
   baseURL = Env.baseAPi
   constructor(public Socket: SocketioService) { }
   primaryHost: any = false;
-
+  streamProduct: any;
   ngOnInit(): void {
     console.log(this.id)
     console.log(this.streamDetails, 12312312)
@@ -22,14 +22,15 @@ export class ProductlistshowComponent implements OnInit {
       this.get_post_details();
       this.streamPending = this.streamDetails.streamPending == false ? false : true;
       this.primaryHost = this.streamDetails.primaryHost;
+      this.streamProduct = this.streamDetails.streamrequestposts
     }
   }
 
   get_post_details() {
     this.Socket.get_post_details(this.streamDetails._id).subscribe((res: any) => {
       console.log(res)
-      this.streamDetails = res.value[0]
-      this.streamDetails
+      this.streamProduct = res[0].streamrequestposts;
+      // this.streamDetails
 
     })
   }
