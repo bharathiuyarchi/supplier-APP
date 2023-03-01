@@ -66,6 +66,7 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
       console.log(res)
       this.targetTime = res.endTime;
       this.streamDetails = res
+      console.log(this.streamDetails, 2312312312312)
       // this.targetDate = new Date(2023, 5, 11);
       // this.targetTime = this.targetDate.getTime();
       this.tickTock();
@@ -90,7 +91,12 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
     await this.stream.localUser(res.token, res.Uid, '', channel);
     this.toggle_controls();
   }
-
+  end_stream() {
+      this.agora.end_stream(this.streamDetails._id).subscribe((res: any) => {
+        console.log(res);
+        this.leave_host();
+      })
+  }
   async leave_host() {
     this.logout();
     this.agora.leave_host(this.id).subscribe((res: any) => {
@@ -177,29 +183,34 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
     this.countDown = timer(0, 1000).subscribe(() => --this.counter);
 
   }
+  pauseAll: any = false;
+
+  pause_all() {
+    console.log(this.pauseAll)
+    this.stream.pause_all(this.pauseAll);
+    this.pauseAll = !this.pauseAll;
+    this.playStatus_audio = true;
+    this.playStatus_video = true;
+    console.log(this.pauseAll)
+
+  }
+  openMenus: any = false;
+  open_menus(type: any) {
+    this.openMenus = type;
+  }
   countDown: any;
   counter: any;
   playStatus_video: any = true;
   playStatus_audio: any = true;
   pause_play() {
     this.playStatus_video = !this.playStatus_video;
-    if (this.playStatus_video) {
-      this.stream.togglepause()
-    }
-    else {
-      this.stream.togglePlay()
-    }
-    this.toggle_controls();
+    this.stream.togglePlay()
+    // this.toggle_controls();
   }
   pause_play_audio() {
     this.playStatus_audio = !this.playStatus_audio;
-    if (this.playStatus_audio) {
-      this.stream.togglepause_audio()
-    }
-    else {
-      this.stream.togglePlay_audio()
-    }
-    this.toggle_controls();
+    this.stream.togglePlay_audio()
+    // this.toggle_controls();
   }
   hide_chat: any = false;
   toggle_chat() {
@@ -215,6 +226,7 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
 
   }
   toggle_controls() {
+    console.log({ channel: this.id, audio: this.playStatus_audio, video: this.playStatus_video })
     this.web.toggle_controls({ channel: this.id, audio: this.playStatus_audio, video: this.playStatus_video })
   }
 }

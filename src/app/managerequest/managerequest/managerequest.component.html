@@ -57,12 +57,12 @@
                                     [routerLink]="['step-one']" [queryParams]="{id:item._id}"
                                     *ngIf="item.adminApprove=='Pending'&& item.status !='Cancelled' && item.startTime>iso">Edit</a>
                                 <span style="color: orange;font-weight: bold;"
-                                    *ngIf="item.endTime<iso && item.status  !='Cancelled'">Completed</span>
+                                    *ngIf="item.endTime<iso && item.status  !='Cancelled' ||  item.status  =='Completed'">Completed</span>
                                 <span style="color: green;font-weight: bold;"
                                     *ngIf="item.tokenGeneration==false  && item.adminApprove !='Pending'&& item.status !='Cancelled' && item.startTime<iso && item.endTime > iso">Time
                                     Reached</span>
                                 <span style="color: green;font-weight: bold;"
-                                    *ngIf="item.tokenGeneration==true  && item.adminApprove !='Pending'&& item.status !='Cancelled' && item.startTime<iso && item.endTime > iso">On
+                                    *ngIf="item.tokenGeneration==true  && item.adminApprove !='Pending'&& item.status !='Cancelled' && item.startTime<iso && item.endTime > iso && item.status  !='Completed'">On
                                     Going</span>
                             </td>
                         </tr>

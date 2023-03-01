@@ -47,6 +47,11 @@ export class HostserviceService {
   leave_host(id: any) {
     return this.http.get(this.baseURL + "/v2/generateRTC/leave/host?id=" + id)
   }
+
+  end_stream(id: any) {
+    return this.http.put(this.baseURL + "/v1/ecomplan/steam/end/now?id=" + id, {})
+
+  }
   join_host(id: any) {
     return this.http.get(this.baseURL + "/v2/generateRTC/join/host/admin?id=" + id)
   }
@@ -56,10 +61,10 @@ export class HostserviceService {
     return this.http.post(this.baseURL + "/v2/generateRTC/recording/acquire", { id: id })
   }
   start_recording(json: any) {
-    return this.http.post(this.baseURL + "/v2/generateRTC/recording/start",json)
+    return this.http.post(this.baseURL + "/v2/generateRTC/recording/start", json)
   }
   query_recording(id: any) {
-    return this.http.post(this.baseURL + "/v2/generateRTC/recording/query",id)
+    return this.http.post(this.baseURL + "/v2/generateRTC/recording/query", id)
   }
   stop_recording(res: any) {
     return this.http.post(this.baseURL + "/v2/generateRTC/recording/stop", res)
@@ -69,6 +74,6 @@ export class HostserviceService {
   // user limit 
 
   get_user_participents(id: any) {
-    return this.http.get(this.baseURL + "/v2/generateRTC/participents/limit/all?id="+id)
+    return this.http.get(this.baseURL + "/v2/generateRTC/participents/limit/all?id=" + id)
   }
 }

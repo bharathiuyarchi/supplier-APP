@@ -42,7 +42,7 @@
                             </td>
                             <td>
                                 <ng-container *ngIf="item.no_of_host == 1">
-                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.allot_host_1 !='subhost'"
+                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.status !='Completed' &&  item.allot_host_1 !='subhost'"
                                         class="btn btn-success btn-sm" style="padding: 6px 8px;"
                                         (click)="go_live(item)">Go
                                         Live</a>
@@ -53,12 +53,13 @@
                                         [queryParams]="{id:item._id}">Assign Host</a>
                                     <div *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !='subhost'">
                                         <span
-                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
+                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration &&  item.status !='Completed'"
                                             style="color:rgb(173, 31, 168);font-weight:bold">On
                                             Going</span>
                                         <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
                                             style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
-                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
+                                        <span
+                                            *ngIf="iso > item.endTime && item.status !='Cancelled'||item.status =='Completed'"
                                             style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
                                         <span *ngIf="item.status =='Cancelled' "
                                             style="color:red;font-weight:bold">Cancelled</span>
@@ -68,7 +69,7 @@
                                     </div>
                                 </ng-container>
                                 <ng-container *ngIf="item.no_of_host == 2">
-                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null"
+                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.status !='Completed' &&  item.allot_host_1 !=null && item.allot_host_2 !=null"
                                         class="btn btn-success btn-sm" style="padding: 6px 8px;"
                                         (click)="go_live(item)">Go
                                         Live</a>
@@ -85,7 +86,7 @@
                                             Going</span>
                                         <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
                                             style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
-                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
+                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled' ||    item.status =='Completed'  "
                                             style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
                                         <span *ngIf="item.status =='Cancelled' "
                                             style="color:red;font-weight:bold">Cancelled</span>
@@ -95,7 +96,7 @@
                                     </div>
                                 </ng-container>
                                 <ng-container *ngIf="item.no_of_host == 3">
-                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null&& item.allot_host_3 !=null"
+                                    <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.status !='Completed' &&  item.allot_host_1 !=null && item.allot_host_2 !=null&& item.allot_host_3 !=null"
                                         class="btn btn-success btn-sm" style="padding: 6px 8px;"
                                         (click)="go_live(item)">Go
                                         Live</a>
@@ -112,7 +113,7 @@
                                             Going</span>
                                         <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
                                             style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
-                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'  "
+                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'||   item.status =='Completed'"
                                             style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
                                         <span *ngIf="item.status =='Cancelled' "
                                             style="color:red;font-weight:bold">Cancelled</span>
