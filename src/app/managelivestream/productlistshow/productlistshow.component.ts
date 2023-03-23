@@ -29,7 +29,7 @@ export class ProductlistshowComponent implements OnInit {
   get_post_details() {
     this.Socket.get_post_details(this.streamDetails._id).subscribe((res: any) => {
       console.log(res)
-      this.streamProduct = res[0].streamrequestposts;
+      this.streamProduct = res.value[0].streamrequestposts;
       // this.streamDetails
 
     })

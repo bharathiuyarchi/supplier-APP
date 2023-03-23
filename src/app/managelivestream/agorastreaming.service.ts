@@ -25,6 +25,7 @@ export class AgorastreamingService {
 
   remoteUsers: IUser[] = [];
   updateUserInfo = new BehaviorSubject<any>(null);
+  unpublished = new BehaviorSubject<any>(null);
   liveUsersList: any = [];
 
   agoraServerEvents(rtc: any) {
@@ -35,9 +36,8 @@ export class AgorastreamingService {
       if (index != -1) {
       }
       else {
-        this.remoteUsers.push({ 'uid': +id, audio: user._audio_muted_, video: user._video_muted_ });
+        this.remoteUsers.push({ class: "medium", 'uid': +id, audio: user._audio_muted_, video: user._video_muted_ });
         this.updateUserInfo.next(id);
-
       }
       await rtc.client.subscribe(user, mediaType);
       if (mediaType === "video") {
@@ -63,6 +63,7 @@ export class AgorastreamingService {
       if (index != -1) {
         this.remoteUsers.splice(index, 1)
       }
+      this.unpublished.next(user.uid)
     });
     rtc.client.on("user-info-updated", (uid: any, msg: any) => {
       let index = this.remoteUsers.findIndex((a: any) => a.uid == uid)
@@ -88,7 +89,7 @@ export class AgorastreamingService {
     });
   }
 
-  async localUser(token: any, uuid: any, type: any, channel: any) {
+  async localUser(token: any, uuid: any, type: any, channel: any, req: any) {
     console.log(this.rtc.client, 'asdasasdas')
     await this.rtc.client.join(this.options.appId, channel, token, uuid);
     if (type != 'live') {
@@ -96,7 +97,17 @@ export class AgorastreamingService {
       this.localVideoTrack = await AgoraRTC.createCameraVideoTrack({
         encoderConfig: '1080p_3',
       });
-
+      console.log(req.allMedia, '123123121231231212312')
+      if (!req.allMedia) {
+        this.localAudioTrack.setEnabled(false)
+        this.localVideoTrack.setEnabled(false)
+        this.audioPass = false;
+        this.videoPass = false;
+      }
+      else {
+        this.localAudioTrack.setEnabled(req.audio)
+        this.localVideoTrack.setEnabled(req.video)
+      }
       this.localVideoTrack.play('local-player');
       await this.rtc.client.publish([this.localAudioTrack, this.localVideoTrack]);
     }
@@ -112,13 +123,7 @@ export class AgorastreamingService {
     this.remoteUsers = [];
   }
 
-  async pause_all(type: any) {
-    this.localAudioTrack.setEnabled(type)
-    this.localVideoTrack.setEnabled(type)
-    this.audioPass = type;
-    this.videoPass = type;
 
-  }
 
   async switch_cam(deviceId: any) {
     const cams = await AgoraRTC.getCameras();
@@ -138,17 +143,27 @@ export class AgorastreamingService {
     return cams[index].deviceId;
   }
 
-  async togglePlay() {
-    console.log(this.localVideoTrack.setEnabled(!this.videoPass))
-    this.videoPass = !this.videoPass
+
+  async togglePlay(type: any) {
+    console.log(this.localVideoTrack.setEnabled(type))
+    this.videoPass = type
+  }
+
+  async pause_all(type: any) {
+    this.localAudioTrack.setEnabled(type)
+    this.localVideoTrack.setEnabled(type)
+    this.audioPass = type;
+    this.videoPass = type;
+
   }
 
   audioPass: any = true
   videoPass: any = true
-  async togglePlay_audio() {
-    console.log(this.localAudioTrack.setEnabled(!this.audioPass))
-    this.audioPass = !this.audioPass
+  async togglePlay_audio(type: any) {
+    console.log(this.localAudioTrack.setEnabled(type))
+    this.audioPass = type
   }
+
 
 
 }

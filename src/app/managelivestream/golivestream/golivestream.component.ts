@@ -3,7 +3,7 @@ import { Component, OnInit, Pipe, PipeTransform, OnDestroy, DoCheck } from '@ang
 import { Managelivestream } from '../managelivestream.module';
 import { AgorastreamingService } from '../agorastreaming.service';
 import { HostserviceService } from '../hostservice.service';
-import { Subscription, timer } from 'rxjs';
+import { retry, Subscription, timer } from 'rxjs';
 import { SocketioService } from '../socketio.service';
 declare let $: any;
 @Component({
@@ -45,15 +45,134 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
     });
     this.get_user_participents(this.id)
     setTimeout(() => {
-      // $("#local-player div").css('border-radius', "10px")
-      // $("#local-player div").css('box-shadow', "0px 0px 8px rgba(0, 0, 0, 0.25)")
-
     }, 1500)
+
+    this.stream.updateUserInfo.subscribe((res: any) => {
+      if (this.streamDetails != null) {
+        let index = this.streamDetails.temptokens_sub.findIndex((a: any) => a.Uid == res);
+
+        if (index == -1) {
+          this.api.get_token_details(this.id).subscribe((res: any) => {
+            this.streamDetails.temptokens_sub = res.temptokens_sub;
+          })
+        }
+
+      }
+      if (this.tokenValues != null) {
+        this.screen_view()
+      }
+
+    })
+    this.stream.unpublished.subscribe((res: any) => {
+      if (this.tokenValues != null) {
+        this.screen_view()
+      }
+    })
   }
   targetDate: any;
   streamDetails: any;
-  pause_button() {
-    // this.stream.pause_button();
+  tokenValues: any;
+
+  localvideo: any = 'medium';
+  screen_view() {
+    let bissize: any = this.tokenValues.bigSize;
+    let biguser: any = this.tokenValues.Uid
+    this.streamDetails.temptokens_sub.forEach((element: any) => {
+      if (element.bigSize) {
+        let index = this.stream.remoteUsers.findIndex((e: any) => e.uid == element.Uid);
+        if (index != -1) {
+          bissize = true;
+          biguser = element.Uid;
+        }
+      }
+    });
+    console.log(bissize)
+    if (bissize) {
+      if (this.tokenValues.Uid == biguser) {
+        this.localvideo = 'big-screen';
+        let i = 1;
+        this.stream.remoteUsers.forEach((a: any) => {
+          let index = this.stream.remoteUsers.findIndex((e: any) => e.uid == a.uid);
+          if (index != -1) {
+            this.stream.remoteUsers[index].class = 'small-screen' + i;
+            i++;
+          }
+        })
+      }
+      else {
+        let userId = this.stream.remoteUsers.findIndex((e: any) => e.uid == biguser);
+        if (userId != -1) {
+          this.localvideo = 'small-screen1';
+          this.streamDetails.temptokens_sub.forEach((element: any) => {
+            let index = this.stream.remoteUsers.findIndex((e: any) => e.uid == element.Uid);
+            if (index != -1) {
+              if (biguser != element.Uid) {
+                this.stream.remoteUsers[index].class = 'small-screen2';
+              }
+              else {
+                this.stream.remoteUsers[index].class = 'big-screen';
+              }
+            }
+          });
+        }
+        else {
+          this.stream.remoteUsers.map((a: any) => {
+            return a.class = 'medium';
+          })
+          this.localvideo = 'medium';
+        }
+      }
+      console.log(this.stream.remoteUsers, '23232_2342342')
+    }
+    else {
+      this.stream.remoteUsers.map((a: any) => {
+        return a.class = 'medium';
+      })
+      this.localvideo = 'medium';
+      console.log(this.stream.remoteUsers, '23232_2342342_SA')
+    }
+  }
+  change_view_sub(item: any) {
+    this.tokenValues.bigSize = false;
+    let i = 0;
+    console.log(this.streamDetails.temptokens_sub)
+    this.streamDetails.temptokens_sub.forEach((element: any) => {
+      if (item.Uid != element.Uid) {
+        this.streamDetails.temptokens_sub[i].bigSize = false;
+      }
+      else {
+        this.streamDetails.temptokens_sub[i].bigSize = !this.streamDetails.temptokens_sub[i].bigSize
+      };
+      i++;
+    })
+    let data = {
+      streamId: this.streamDetails._id,
+      uid: item.Uid,
+      tokenId: item._id,
+      bigSize: item.bigSize
+
+    }
+    this.web.stream_view_change(data);
+    // this.screen_view();
+  }
+  open_menus_sub_menus: any = false;
+  open_menus_sub(val: any) {
+    this.open_menus_sub_menus = val
+  }
+  bigscreen: any = false;
+  change_view() {
+    this.streamDetails.temptokens_sub.map((a: any) => {
+      return a.bigSize = false;
+    })
+    this.tokenValues.bigSize = !this.tokenValues.bigSize;
+    let data = {
+      streamId: this.streamDetails._id,
+      uid: this.tokenValues.Uid,
+      tokenId: this.tokenValues._id,
+      bigSize: this.tokenValues.bigSize
+    }
+    this.web.stream_view_change(data);
+    // this.screen_view();
   }
   get_token(id: any) {
     this.api.create_cloude_recording({ streamId: id }).subscribe((res: any) => {
@@ -71,14 +190,74 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
       // this.targetTime = this.targetDate.getTime();
       this.tickTock();
       res = res.temptokens;
-      this.start_call_now(res, res.chennel);
+      this.tokenValues = res;
+      this.media_controls(res);
+      if (!res.mainhostLeave) {
+        this.start_call_now(res, res.chennel);
+      }
       this.userId = res.Uid;
       console.log(this.token, 2131231)
       this.web.mainhost_remove_live(this.id, this.userId).subscribe(msg => {
         console.log(msg)
         this.leave_host();
       });
+    })
+  }
 
+  media_controls(res: any) {
+
+    this.web.media_controls_audio(res._id, res.Uid).subscribe((res: any) => {
+      console.log(res, 11231232)
+      this.playStatus_audio = res.req.audio;
+      this.stream.togglePlay_audio(res.req.audio)
+    })
+
+    this.web.media_controls_video(res._id, res.Uid).subscribe((res: any) => {
+      console.log(res, 112312)
+      this.playStatus_video = res.req.video
+      this.stream.togglePlay(res.req.video)
+    })
+    this.web.allow_stream_controls(res._id, res.Uid).subscribe((res: any) => {
+      this.tokenValues.mainhostLeave = false;
+      this.start_call_now(this.tokenValues, this.tokenValues.chennel);
+      this.userId = this.tokenValues.Uid;
+
+    })
+    this.web.stream_view_change_controls(res.chennel).subscribe((res: any) => {
+      console.log(res, 123123)
+      if (res.req.uid == this.tokenValues.Uid) {
+        this.tokenValues.bigSize = res.req.bigSize;
+        this.streamDetails.temptokens_sub.map((a: any) => {
+          return a.bigSize = false;
+        })
+      }
+      else {
+        this.tokenValues.bigSize = false;
+        let i = 0;
+        this.streamDetails.temptokens_sub.forEach((element: any) => {
+          if (res.req.uid != element.Uid) {
+            this.streamDetails.temptokens_sub[i].bigSize = false;
+          }
+          else {
+            this.streamDetails.temptokens_sub[i].bigSize = res.req.bigSize
+          };
+          i++;
+        })
+      }
+      this.screen_view();
+    })
+    this.web.media_controls_all(res._id, res.Uid).subscribe((res: any) => {
+      console.log(res, 11231234232)
+      console.log(res)
+      // alert("asda")
+      if (res.req.allMedia) {
+        this.pauseAll = true;
+        this.pause_all()
+      }
+      else {
+        this.pauseAll = false;
+        this.pause_all()
+      }
     })
   }
   get_user_participents(id: any) {
@@ -88,14 +267,14 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
   }
   async start_call_now(res: any, channel: any) {
     this.stream.agoraServerEvents(this.stream.rtc);
-    await this.stream.localUser(res.token, res.Uid, '', channel);
+    await this.stream.localUser(res.token, res.Uid, '', channel, res);
     this.toggle_controls();
   }
   end_stream() {
-      this.agora.end_stream(this.streamDetails._id).subscribe((res: any) => {
-        console.log(res);
-        this.leave_host();
-      })
+    this.agora.end_stream(this.streamDetails._id).subscribe((res: any) => {
+      console.log(res);
+      this.leave_host();
+    })
   }
   async leave_host() {
     this.logout();
@@ -129,16 +308,23 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
     this.deviceId = this.stream.switch_cam(this.deviceId);
   }
   back_button() {
-    window.history.back();
+    // window.history.back();
+    window.location.href = "/livestream"
   }
-  leave_subhost(uid: any) {
+  leave_subhost(item: any) {
     let data = {
       streamId: this.streamDetails._id,
-      uid: uid
+      uid: item.Uid,
+      tokenId: item._id
     }
+    let index = this.streamDetails.temptokens_sub.findIndex((a: any) => a.Uid == item.Uid);
+    if (index != -1) {
+      this.streamDetails.temptokens_sub[index].mainhostLeave = !item.mainhostLeave
+    }
+    this.controlsView = 'setting';
+    // 
     this.web.leave_subhost(data)
   }
-
   expiered: any = false;
   expiered_message(res: any) {
     console.log(res, 'sdcss dcs ds')
@@ -204,12 +390,12 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
   playStatus_audio: any = true;
   pause_play() {
     this.playStatus_video = !this.playStatus_video;
-    this.stream.togglePlay()
+    this.stream.togglePlay(this.playStatus_video)
     // this.toggle_controls();
   }
   pause_play_audio() {
     this.playStatus_audio = !this.playStatus_audio;
-    this.stream.togglePlay_audio()
+    this.stream.togglePlay_audio(this.playStatus_audio)
     // this.toggle_controls();
   }
   hide_chat: any = false;
@@ -228,6 +414,99 @@ export class GolivestreamComponent implements OnInit, OnDestroy, DoCheck {
   toggle_controls() {
     console.log({ channel: this.id, audio: this.playStatus_audio, video: this.playStatus_video })
     this.web.toggle_controls({ channel: this.id, audio: this.playStatus_audio, video: this.playStatus_video })
+  }
+  check_status(type: any, Uid: any) {
+    if (this.streamDetails != null) {
+      let index = this.streamDetails.temptokens_sub.findIndex((a: any) => a.Uid == Uid);
+      if (index != -1) {
+        if (type == 'video') {
+          return this.streamDetails.temptokens_sub[index].video
+        }
+        if (type == 'audio') {
+          return this.streamDetails.temptokens_sub[index].audio;
+
+        }
+        if (type == 'allMedia') {
+          return this.streamDetails.temptokens_sub[index].allMedia
+        }
+      }
+      else {
+        return false;
+      }
+    }
+    return false;
+  }
+  mute_video(item: any) {
+
+    let data = {
+      tokenId: this.tokenValues._id,
+      userId: item.Uid,
+      video: !item.video
+    }
+    let index = this.streamDetails.temptokens_sub.findIndex((a: any) => a.Uid == item.Uid);
+    if (index != -1) {
+      this.streamDetails.temptokens_sub[index].video = !item.video
+    }
+    this.web.host_controll_video(data)
+  }
+  mute_audio(item: any) {
+    let data = {
+      tokenId: this.tokenValues._id,
+      userId: item.Uid,
+      audio: !item.audio
+    }
+    let index = this.streamDetails.temptokens_sub.findIndex((a: any) => a.Uid == item.Uid);
+    if (index != -1) {
+      this.streamDetails.temptokens_sub[index].audio = !item.audio
+    }
+    this.web.host_controll_audio(data)
+  }
+  mute_all(item: any) {
+    let data = {
+      tokenId: this.tokenValues._id,
+      userId: item.Uid,
+      allMedia: !item.allMedia
+
+    }
+    let index = this.streamDetails.temptokens_sub.findIndex((a: any) => a.Uid == item.Uid);
+    if (index != -1) {
+      this.streamDetails.temptokens_sub[index].allMedia = !item.allMedia
+      this.streamDetails.temptokens_sub[index].audio = true
+      this.streamDetails.temptokens_sub[index].video = true
+    }
+    console.log(data)
+    this.web.host_controll_all(data)
+  }
+  allow_subhost(item: any) {
+    let data = {
+      tokenId: this.tokenValues._id,
+      userId: item.Uid,
+      subhost: item._id,
+    }
+    this.web.allow_subhost(data)
+    let index = this.streamDetails.temptokens_sub.findIndex((a: any) => a.Uid == item.Uid);
+    if (index != -1) {
+      this.streamDetails.temptokens_sub[index].mainhostLeave = !item.mainhostLeave
+    }
+    this.controlsView = this.subhost_view;
+  }
+
+  controlsView: any = 'me';
+  chanage_coltrols(type: any) {
+    this.controlsView = type
+  }
+  select_Subhost: any;
+  subhost_view: any;
+  choose_subhost(type: any, sub: any) {
+    this.select_Subhost = sub;
+    console.log(sub)
+    if (!sub.mainhostLeave) {
+      this.controlsView = type;
+    }
+    else {
+      this.controlsView = 'allow';
+      this.subhost_view = type;
+    }
   }
 }
 @Pipe({

@@ -114,7 +114,7 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     ProductlistshowComponent,
     StreamchatComponent,
     AlertstreamComponent,
-    ManagealertstreamComponent
+    ManagealertstreamComponent,
   ],
   imports: [
     CommonModule,

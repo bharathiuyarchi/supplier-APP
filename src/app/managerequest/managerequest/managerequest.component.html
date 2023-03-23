@@ -21,6 +21,7 @@
                             <th style="border-right: 1px solid gray;">Post Count</th>
                             <th style="border-right: 1px solid gray;">Streaming Date & Time</th>
                             <!-- <th style="border-right: 1px solid gray;">Step Two</th> -->
+                            <th style="border-right: 1px solid gray;">Stream Status</th>
                             <th style="border-right: 1px solid gray;">Status</th>
                             <th style="border-right: 1px solid gray;">Action</th>
                         </tr>
@@ -45,17 +46,9 @@
                             <td style="border-right: 1px solid #d8d8d8;">{{item.streamingDate}} - {{item.streamingTime}}
                             </td>
                             <!-- <td style="border-right: 1px solid #d8d8d8;">{{item.sepTwo}}</td> -->
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.adminApprove}}</td>
-
                             <td style="border-right: 1px solid #d8d8d8;">
-                                <a class="btn btn-danger btn-sm" style="padding: 6px 10px;margin-right: 10px;"
-                                    *ngIf="item.tokenGeneration==false && item.status !='Cancelled' && item.endTime>iso"
-                                    (click)="cancel_stream(item)">Cancel</a>
                                 <span style="color: red;font-weight: bold;"
                                     *ngIf="item.status =='Cancelled'">Cancelled</span>
-                                <a class="btn btn-primary btn-sm" style="padding: 6px 10px;margin-right: 10px;"
-                                    [routerLink]="['step-one']" [queryParams]="{id:item._id}"
-                                    *ngIf="item.adminApprove=='Pending'&& item.status !='Cancelled' && item.startTime>iso">Edit</a>
                                 <span style="color: orange;font-weight: bold;"
                                     *ngIf="item.endTime<iso && item.status  !='Cancelled' ||  item.status  =='Completed'">Completed</span>
                                 <span style="color: green;font-weight: bold;"
@@ -64,6 +57,15 @@
                                 <span style="color: green;font-weight: bold;"
                                     *ngIf="item.tokenGeneration==true  && item.adminApprove !='Pending'&& item.status !='Cancelled' && item.startTime<iso && item.endTime > iso && item.status  !='Completed'">On
                                     Going</span>
+                            </td>
+                            <td style="border-right: 1px solid #d8d8d8;">{{item.adminApprove}}</td>
+                            <td style="border-right: 1px solid #d8d8d8;">
+                                <a class="btn btn-danger btn-sm" style="padding: 6px 10px;margin-right: 10px;"
+                                    *ngIf="item.tokenGeneration==false && item.status !='Cancelled' && item.endTime>iso"
+                                    (click)="cancel_stream(item)">Cancel</a>
+                                <a class="btn btn-primary btn-sm" style="padding: 6px 10px;margin-right: 10px;"
+                                    [routerLink]="['step-one']" [queryParams]="{id:item._id}"
+                                    *ngIf="item.adminApprove=='Pending'&& item.status !='Cancelled' && item.startTime>iso">Edit</a>
                             </td>
                         </tr>
                     </tbody>

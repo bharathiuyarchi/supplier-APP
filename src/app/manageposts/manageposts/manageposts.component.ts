@@ -14,22 +14,33 @@ export class ManagepostsComponent implements OnInit {
   displaycount = 0;
   totalcount: any = 0;
   pagetotal: any = 0;
+  iso: any;
   constructor(public api: managepostsservice) { }
   baseURL = Env.baseAPi;
 
   ngOnInit(): void {
     this.filterForm.get('page').setValue(this.page)
     this.get_all_posts(this.filterForm.value);
+    this.iso = new Date().getTime()
+
   }
   my_posts: any;
   get_all_posts(page: any) {
     this.filterForm.get('page').setValue(this.page)
     this.api.get_all_post(this.filterForm.value).subscribe((res: any) => {
       console.log(res)
-      this.my_posts = res.value;
-      this.displaycount = this.page;
-      this.totalcount = res.total;
-      this.pagetotal = Math.ceil(res.total / 10);
+      if (res != null) {
+        this.my_posts = res.value;
+        this.displaycount = this.page;
+        this.totalcount = res.total;
+        this.pagetotal = Math.ceil(res.total / 10);
+      }
+      else {
+        this.my_posts = [];
+        this.displaycount = 0;
+        this.totalcount = 0;
+        this.pagetotal = 0;
+      }
     })
   }
 
@@ -62,7 +73,7 @@ export class ManagepostsComponent implements OnInit {
 
   filterForm: any = new FormGroup({
     date: new FormControl(null),
-    status: new FormControl('Active'),
+    status: new FormControl('all'),
     page: new FormControl(0),
   })
   filterDate = new FormControl(null)

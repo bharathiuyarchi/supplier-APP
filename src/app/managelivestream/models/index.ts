@@ -4,8 +4,9 @@ import AgoraRTC, { IAgoraRTCClient, LiveStreamingTranscodingConfig, ICameraVideo
 export interface IUser {
   uid: number;
   name?: string;
-  audio?:Boolean,
-  video?:Boolean
+  audio?: Boolean,
+  video?: Boolean,
+  class?: String
 }
 export interface IRtc {
   client: IAgoraRTCClient;

@@ -21,6 +21,7 @@
                             <th>Stream Start & End</th>
                             <th>SR/NOP </th>
                             <th>Add NOP</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -41,6 +42,70 @@
                                     [queryParams]="{id:item._id}">+</a>
                             </td>
                             <td>
+                                <ng-container *ngIf="item.tokenGeneration ==false &&  iso > item.endTime">
+                                    <span style="color:orange;font-weight:bold">Time Out</span>
+                                </ng-container>
+
+                                <ng-container *ngIf="item.no_of_host == 1">
+                                    <div *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !='subhost'">
+                                        <span
+                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration &&  item.status !='Completed'"
+                                            style="color:rgb(173, 31, 168);font-weight:bold">On
+                                            Going</span>
+                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
+                                        <span
+                                            *ngIf="item.tokenGeneration && iso > item.endTime && item.status !='Cancelled'||item.status =='Completed'"
+                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
+                                        <span *ngIf="item.status =='Cancelled' "
+                                            style="color:red;font-weight:bold">Cancelled</span>
+                                        <span
+                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.no_of_host == 2">
+                                    <div
+                                        *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null">
+                                        <span
+                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
+                                            style="color:rgb(173, 31, 168);font-weight:bold">On
+                                            Going</span>
+                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
+                                        <span
+                                            *ngIf="item.tokenGeneration && iso > item.endTime && item.status !='Cancelled' ||    item.status =='Completed'  "
+                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
+                                        <span *ngIf="item.status =='Cancelled' "
+                                            style="color:red;font-weight:bold">Cancelled</span>
+                                        <span
+                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.no_of_host == 3">
+                                    <div
+                                        *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null &&  item.allot_host_3 !=null">
+                                        <span
+                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
+                                            style="color:rgb(173, 31, 168);font-weight:bold">On
+                                            Going</span>
+                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
+                                        <span
+                                            *ngIf="item.tokenGeneration && iso > item.endTime && item.status !='Cancelled'||   item.status =='Completed'"
+                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
+                                        <span *ngIf="item.status =='Cancelled' "
+                                            style="color:red;font-weight:bold">Cancelled</span>
+                                        <span
+                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
+                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
+                                    </div>
+                                </ng-container>
+
+                                <!-- tokenGeneration -->
+                            </td>
+                            <td>
                                 <ng-container *ngIf="item.no_of_host == 1">
                                     <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.status !='Completed' &&  item.allot_host_1 !='subhost'"
                                         class="btn btn-success btn-sm" style="padding: 6px 8px;"
@@ -51,22 +116,6 @@
                                         style="font-weight: bold;padding: 6px 10px;" class="btn btn-primary"
                                         routerLink="/manage-subuser/manageallot/allot"
                                         [queryParams]="{id:item._id}">Assign Host</a>
-                                    <div *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !='subhost'">
-                                        <span
-                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration &&  item.status !='Completed'"
-                                            style="color:rgb(173, 31, 168);font-weight:bold">On
-                                            Going</span>
-                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
-                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
-                                        <span
-                                            *ngIf="iso > item.endTime && item.status !='Cancelled'||item.status =='Completed'"
-                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
-                                        <span *ngIf="item.status =='Cancelled' "
-                                            style="color:red;font-weight:bold">Cancelled</span>
-                                        <span
-                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
-                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
-                                    </div>
                                 </ng-container>
                                 <ng-container *ngIf="item.no_of_host == 2">
                                     <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.status !='Completed' &&  item.allot_host_1 !=null && item.allot_host_2 !=null"
@@ -78,22 +127,6 @@
                                         style="font-weight: bold;padding: 6px 10px;" class="btn btn-primary"
                                         routerLink="/manage-subuser/manageallot/allot"
                                         [queryParams]="{id:item._id}">Assign Host</a>
-                                    <div
-                                        *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null">
-                                        <span
-                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
-                                            style="color:rgb(173, 31, 168);font-weight:bold">On
-                                            Going</span>
-                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
-                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
-                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled' ||    item.status =='Completed'  "
-                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
-                                        <span *ngIf="item.status =='Cancelled' "
-                                            style="color:red;font-weight:bold">Cancelled</span>
-                                        <span
-                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
-                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
-                                    </div>
                                 </ng-container>
                                 <ng-container *ngIf="item.no_of_host == 3">
                                     <a *ngIf="iso > item.startTime && iso < item.endTime && item.status !='Cancelled' && item.hostingPermissions && item.allot_chat !='subhost' &&  item.status !='Completed' &&  item.allot_host_1 !=null && item.allot_host_2 !=null&& item.allot_host_3 !=null"
@@ -105,22 +138,6 @@
                                         style="font-weight: bold;padding: 6px 10px;" class="btn btn-primary"
                                         routerLink="/manage-subuser/manageallot/allot"
                                         [queryParams]="{id:item._id}">Assign Host</a>
-                                    <div
-                                        *ngIf="item.allot_chat !='subhost' &&  item.allot_host_1 !=null && item.allot_host_2 !=null &&  item.allot_host_3 !=null">
-                                        <span
-                                            *ngIf="iso < item.endTime && item.status !='Cancelled'&& !item.hostingPermissions && item.tokenGeneration"
-                                            style="color:rgb(173, 31, 168);font-weight:bold">On
-                                            Going</span>
-                                        <span *ngIf="iso < item.startTime && item.status !='Cancelled'"
-                                            style="color:rgb(50, 18, 207);font-weight:bold">Waiting</span>
-                                        <span *ngIf="iso > item.endTime && item.status !='Cancelled'||   item.status =='Completed'"
-                                            style="color:rgb(184, 127, 21);font-weight:bold">Completed</span>
-                                        <span *ngIf="item.status =='Cancelled' "
-                                            style="color:red;font-weight:bold">Cancelled</span>
-                                        <span
-                                            *ngIf="iso > item.startTime && item.status !='Cancelled' && iso < item.endTime&& !item.tokenGeneration && !item.hostingPermissions"
-                                            style="color:rgb(50, 18, 207);font-weight:bold">Host Delay</span>
-                                    </div>
                                 </ng-container>
                             </td>
                         </tr>

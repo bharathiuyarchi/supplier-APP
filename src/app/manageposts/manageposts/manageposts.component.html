@@ -3,7 +3,7 @@
     <app-header></app-header>
 
     <div class="container-fluid">
-        <div class="row" *ngIf="my_posts !=null">
+        <div class="row">
             <h5 class="title-menu mt-3" style="text-align: center;">My Posts</h5>
             <div class="row">
                 <div class="col-6">
@@ -11,6 +11,7 @@
                         <div class="filter-form">
                             <select name="" id="" class="btn" style="    text-align: left;" (change)="apply_filter()"
                                 formControlName="status">
+                                <option [ngValue]="'all'">All</option>
                                 <option value="Active">Active</option>
                                 <option value="assigned">Assigned</option>
                                 <option value="live">Live</option>
@@ -34,110 +35,116 @@
                 </div>
             </div>
 
+            <ng-container *ngIf="my_posts !=null">
 
-            <p *ngIf="my_posts.length ==0" style="text-align: center;margin-top: 30px;">No Posts Yet</p>
-            <div class="col-12" *ngIf="my_posts.length !=0">
-                <table class="table table-borderless mt-4 table_all_orders">
-                    <thead>
-                        <tr style="border: 1px solid #484444;">
-                            <th style="border-right: 1px solid gray;">NO.</th>
-                            <th style="border-right: 1px solid gray;">Date & Time</th>
-                            <th style="border-right: 1px solid gray;">Product</th>
-                            <th style="border-right: 1px solid gray;">Quantity</th>
-                            <th style="border-right: 1px solid gray;">Market Price</th>
-                            <th style="border-right: 1px solid gray;">offerPrice</th>
-                            <th style="border-right: 1px solid gray;">Stream Name</th>
-                            <th style="border-right: 1px solid gray;">Start End Video</th>
-                            <th style="border-right: 1px solid gray;">Status</th>
-                            <th style="border-right: 1px solid gray;"
-                                *ngIf="filterForm.get('status')?.value !='removed' && filterForm.get('status')?.value !='Cancelled'  && filterForm.get('status')?.value !='exhausted'&& filterForm.get('status')?.value !='live'">
-                                Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border: 1px solid #d8d8d8;" *ngFor="let item of my_posts; index as i">
-                            <td style="border-right: 1px solid #d8d8d8;">{{i+1+(10*displaycount)}}</td>
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.created|date:"dd-MM-yyyy"}}
-                                {{item.created|date:"hh:mm a"}}</td>
-                            <td style="border-right: 1px solid #d8d8d8;cursor: pointer;"> <a style="color: blue;"
-                                    (click)="view_image('content',item)">{{item.productName}}</a></td>
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.quantity}}</td>
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.marketPlace}}</td>
+                <p *ngIf="my_posts.length ==0" style="text-align: center;margin-top: 30px;">No Posts Yet</p>
+                <div class="col-12" *ngIf="my_posts.length !=0">
+                    <table class="table table-borderless mt-4 table_all_orders">
+                        <thead>
+                            <tr style="border: 1px solid #484444;">
+                                <th style="border-right: 1px solid gray;">NO.</th>
+                                <!-- <th style="border-right: 1px solid gray;">Date & Time</th> -->
+                                <th style="border-right: 1px solid gray;">Product</th>
+                                <th style="border-right: 1px solid gray;">Quantity</th>
+                                <th style="border-right: 1px solid gray;">Market Price</th>
+                                <th style="border-right: 1px solid gray;">offerPrice</th>
+                                <th style="border-right: 1px solid gray;">Stream Name</th>
+                                <th style="border-right: 1px solid gray;">Start End Video</th>
+                                <th style="border-right: 1px solid gray;">Status</th>
+                                <th style="border-right: 1px solid gray;"
+                                    *ngIf="filterForm.get('status')?.value !='removed' && filterForm.get('status')?.value !='Cancelled'  && filterForm.get('status')?.value !='exhausted'&& filterForm.get('status')?.value !='live'">
+                                    Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border: 1px solid #d8d8d8;" *ngFor="let item of my_posts; index as i">
+                                <td style="border-right: 1px solid #d8d8d8;">{{i+1+(10*displaycount)}}</td>
+                                <!-- <td style="border-right: 1px solid #d8d8d8;">{{item.created|date:"dd-MM-yyyy"}}
+                                    {{item.created|date:"hh:mm a"}}</td> -->
+                                <td style="border-right: 1px solid #d8d8d8;cursor: pointer;"> <a style="color: blue;"
+                                        (click)="view_image('content',item)">{{item.productName}}</a></td>
+                                <td style="border-right: 1px solid #d8d8d8;">{{item.quantity}}</td>
+                                <td style="border-right: 1px solid #d8d8d8;">{{item.marketPlace}}</td>
 
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.offerPrice}}</td>
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.streamName==null?"-":item.streamName}}
-                            </td>
-                            <td style="border-right: 1px solid #d8d8d8;">{{item.streamStart|date :"hh:mm a"}} -
-                                {{+item.streamEnd|date :"hh:mm a"}}
-                            </td>
-                            <td style="border-right: 1px solid #d8d8d8;">
-                                <span
-                                    *ngIf="filterForm.get('status')?.value =='Active' || filterForm.get('status')?.value =='assigned' || filterForm.get('status')?.value =='Cancelled'  ||filterForm.get('status')?.value =='removed'  ">{{item.status}}
-                                </span>
-                                <span *ngIf="filterForm.get('status')?.value =='live'">Assigned Live
-                                </span>
-                                <span *ngIf="filterForm.get('status')?.value =='completed'">Assigned Completed
-                                </span>
-                            </td>
-                            <td style="border-right: 1px solid #d8d8d8;"
-                                *ngIf="filterForm.get('status')?.value !='removed' && filterForm.get('status')?.value !='Cancelled'  && filterForm.get('status')?.value !='exhausted' && filterForm.get('status')?.value !='live'">
-                                <button type="button" class="btn btn-danger btn-sm"
-                                    style="padding: 5px 10px; margin-right: 10px;" (click)="delete_post(item._id)"
-                                    *ngIf="item.status=='Active'"><i class="fa fa-trash"
-                                        aria-hidden="true"></i></button>
-                                <a *ngIf="item.status=='Active' ||item.status=='Assigned'" class="btn btn-primary"
-                                    style="padding: 5px 10px; margin-right: 10px;" [routerLink]="['create-post']"
-                                    [queryParams]="{id:item._id}"><i class="fa fa-edit"></i></a>
-                                <a *ngIf="item.status=='Completed'" class="btn btn-danger"
-                                    style="padding: 5px 10px; margin-right: 10px;"><i class="fa fa-remove"
-                                        (click)="remove_post(item)"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div *ngIf="totalcount !=null"
-                    style="display: flex; justify-content: right; align-items: center;margin-top: 20px;">
-                    <ul class="pagination justify-content-end pageination">
-                        <li style="font-size: 12px; padding: 8px 11px; font-weight: bold">
-                            {{ totalcount + "/" + pagetotal }}
-                        </li>
-                        <li class="page-item">
-                            <button [disabled]="displaycount == 0"
-                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
-                                (click)="pagination(3)">
-                                <i class="fa fa-angle-double-left"></i>
-                            </button>
-                        </li>
-                        <li class="page-item">
-                            <button [disabled]="displaycount == 0"
-                                ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
-                                (click)="pagination(0)">
-                                <i class="fa fa-angle-left"></i>
-                            </button>
-                        </li>
-                        <li class="page-item">
-                            <button class="btn btn-primary" style="padding: 7px 16px;border-radius: 0;margin: 0 4px;">{{
-                                page + 1
-                                }}</button>
-                        </li>
-                        <li class="page-item">
-                            <button [disabled]="pagetotal - 1 == displaycount"
-                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
-                                class="page-link" (click)="pagination(1)">
-                                <i class="fa fa-angle-right"></i>
-                            </button>
-                        </li>
-                        <li class="page-item">
-                            <button [disabled]="pagetotal - 1 == displaycount"
-                                ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
-                                class="page-link" (click)="pagination(2)">
-                                <i class="fa fa-angle-double-right"></i>
-                            </button>
-                        </li>
-                    </ul>
+                                <td style="border-right: 1px solid #d8d8d8;">{{item.offerPrice}}</td>
+                                <td style="border-right: 1px solid #d8d8d8;">
+                                    {{item.streamName==null?"-":item.streamName}}
+                                </td>
+                                <td style="border-right: 1px solid #d8d8d8;">{{item.streamStart|date :"hh:mm a"}} -
+                                    {{+item.streamEnd|date :"hh:mm a"}}
+                                </td>
+                                <td style="border-right: 1px solid #d8d8d8;">
+                                    <span
+                                        *ngIf="filterForm.get('status')?.value =='Active' || filterForm.get('status')?.value =='assigned' || filterForm.get('status')?.value =='Cancelled'  ||filterForm.get('status')?.value =='removed' || filterForm.get('status')?.value =='all'  ">
+                                        {{item.status=='Assigned'?item.endTime < iso? 'Assigned Completed'
+                                            :item.status:item.status}} </span>
+                                            <span *ngIf="filterForm.get('status')?.value =='live'">Assigned Live
+                                            </span>
+                                            <span *ngIf="filterForm.get('status')?.value =='completed'">Assigned
+                                                Completed
+                                            </span>
+                                </td>
+                                <td style="border-right: 1px solid #d8d8d8;"
+                                    *ngIf="filterForm.get('status')?.value !='removed' && filterForm.get('status')?.value !='Cancelled'  && filterForm.get('status')?.value !='exhausted' && filterForm.get('status')?.value !='live'">
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        style="padding: 5px 10px; margin-right: 10px;" (click)="delete_post(item._id)"
+                                        *ngIf="item.status=='Active'"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></button>
+                                    <a *ngIf="item.status=='Active' ||item.status=='Assigned' && item.endTime > iso"
+                                        class="btn btn-primary" style="padding: 5px 10px; margin-right: 10px;"
+                                        [routerLink]="['create-post']" [queryParams]="{id:item._id}"><i
+                                            class="fa fa-edit"></i></a>
+                                    <a *ngIf="item.status=='Completed' ||item.status=='Assigned' && item.endTime < iso"
+                                        class="btn btn-danger" style="padding: 5px 10px; margin-right: 10px;"><i
+                                            class="fa fa-remove" (click)="remove_post(item)"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="totalcount !=null"
+                        style="display: flex; justify-content: right; align-items: center;margin-top: 20px;">
+                        <ul class="pagination justify-content-end pageination">
+                            <li style="font-size: 12px; padding: 8px 11px; font-weight: bold">
+                                {{ totalcount + "/" + pagetotal }}
+                            </li>
+                            <li class="page-item">
+                                <button [disabled]="displaycount == 0"
+                                    ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                    (click)="pagination(3)">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </button>
+                            </li>
+                            <li class="page-item">
+                                <button [disabled]="displaycount == 0"
+                                    ngClass="{{ displaycount == 0 ? 'disabeld' : 'active-btn' }}" class="page-link"
+                                    (click)="pagination(0)">
+                                    <i class="fa fa-angle-left"></i>
+                                </button>
+                            </li>
+                            <li class="page-item">
+                                <button class="btn btn-primary"
+                                    style="padding: 7px 16px;border-radius: 0;margin: 0 4px;">{{
+                                    page + 1
+                                    }}</button>
+                            </li>
+                            <li class="page-item">
+                                <button [disabled]="pagetotal - 1 == displaycount"
+                                    ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                    class="page-link" (click)="pagination(1)">
+                                    <i class="fa fa-angle-right"></i>
+                                </button>
+                            </li>
+                            <li class="page-item">
+                                <button [disabled]="pagetotal - 1 == displaycount"
+                                    ngClass="{{ pagetotal - 1 == displaycount ? 'disabeld' : 'active-btn' }}"
+                                    class="page-link" (click)="pagination(2)">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-
+            </ng-container>
         </div>
 
     </div>

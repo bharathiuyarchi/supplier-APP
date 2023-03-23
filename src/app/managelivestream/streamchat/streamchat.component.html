@@ -7,12 +7,53 @@
             <ng-container *ngFor="let item of this.addpro.value;index as i">
 
                 <li class="message-others" *ngIf="item.type=='others'">
-                    <div style="height: 38px;background: #8888de;color: white;border-radius: 50%;">{{item.userName[0]}}
+                    <div style="padding: 0; display: flex;width: 97%;" #banusers>
+                        <div class="div"
+                            style="height: 38px;    width: 38px;color: white;border-radius: 50%; padding: 6px 13px;"
+                            (click)="baan_user(banusers,show_ban,remove_icon)">
+                            <span class="show_icon_hide"
+                                style="font-size: 17px;margin-top: 2px;">{{item.userName[0]}}</span>
+                            <a class="show_icon2">
+                                <svg width="13" height="13" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10 -8.74228e-07C15.523 -3.91392e-07 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 3.91392e-07 15.523 8.74228e-07 10C1.35706e-06 4.477 4.477 -1.35706e-06 10 -8.74228e-07ZM10 2C7.87827 2 5.84344 2.84285 4.34315 4.34314C2.84285 5.84343 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34314C14.1566 2.84285 12.1217 2 10 2ZM11 15L9 15L9 13L11 13L11 15ZM11 11L9 11L9 5L11 5L11 11Z"
+                                        fill="#9D9D9D" />
+                                </svg>
+
+                            </a>
+                        </div>
+                        <div>
+                            <p>{{item.userName}}</p>
+                            <span style=" word-break: break-word; ">{{item.text}}</span>
+
+                        </div>
                     </div>
-                    <div>
-                        <p>{{item.userName}}</p>
-                        <span style=" word-break: break-word; ">{{item.text}}</span>
+                    <div class="ban-style" #show_ban style="width: 97%;">
+                        <p style="display: flex;align-items: center;font-size:13px;justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M10 -8.74228e-07C15.523 -3.91392e-07 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 3.91392e-07 15.523 8.74228e-07 10C1.35706e-06 4.477 4.477 -1.35706e-06 10 -8.74228e-07ZM10 2C7.87827 2 5.84344 2.84285 4.34315 4.34314C2.84285 5.84343 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34314C14.1566 2.84285 12.1217 2 10 2ZM11 15L9 15L9 13L11 13L11 15ZM11 11L9 11L9 5L11 5L11 11Z"
+                                    fill="#FF0000" fill-opacity="0.81" />
+                            </svg>
+                            <span style="margin-left: 10px;">Do you want To Ban User Name ?</span>
+                        </p>
+                        <div class="buttons" style="display: flex;justify-content: center;">
+                            <button (click)="ban_user_chat(banusers,show_ban,remove_icon,item)" style="background-color: white;border: 1px solid red;color: red;width: 64px;height: 27px;font-size: 12px;border-radius: 4px;margin: 0 8px;
+                            ">Yes</button>
+                            <button (click)="back_message(banusers,show_ban,remove_icon)"
+                                style="width: 64px;height: 27px;font-size: 12px;border-radius: 4px;margin: 0 8px;background-color: white;border: 1px solid rgb(54, 54, 232);color: rgb(54, 54, 232);">no</button>
+                        </div>
                     </div>
+                    <a style="margin-top: -10px;" class="show_icon" #remove_icon (click)="remove_message(item)">
+                        <svg width="13" height="13" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8.5 8.5L13.5 13.5M13.5 8.5L8.5 13.5M21 11C21 12.3132 20.7413 13.6136 20.2388 14.8268C19.7363 16.0401 18.9997 17.1425 18.0711 18.0711C17.1425 18.9997 16.0401 19.7363 14.8268 20.2388C13.6136 20.7413 12.3132 21 11 21C9.68678 21 8.38642 20.7413 7.17317 20.2388C5.95991 19.7363 4.85752 18.9997 3.92893 18.0711C3.00035 17.1425 2.26375 16.0401 1.7612 14.8268C1.25866 13.6136 1 12.3132 1 11C1 8.34784 2.05357 5.8043 3.92893 3.92893C5.8043 2.05357 8.34784 1 11 1C13.6522 1 16.1957 2.05357 18.0711 3.92893C19.9464 5.8043 21 8.34784 21 11Z"
+                                stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+
                 </li>
                 <li class="message-me" *ngIf="item.type=='me'">
                     <div>
